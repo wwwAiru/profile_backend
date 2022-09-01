@@ -1,3 +1,3 @@
 openfeign:
   basic:
-    token: null
+    token:
