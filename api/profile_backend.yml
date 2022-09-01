@@ -1,0 +1,168 @@
+openapi: "3.0.3"
+
+info:
+  title: "profile_backend"
+  description: "profile_backend"
+  version: "1.0.0"
+
+paths:
+
+  /profile/{egarId}:
+    get:
+      description: "Получение профиля сотрудника по Egar ID (Где взять: [egarId]@egartech.ru)"
+
+      parameters:
+        - name: egarId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: "Egar ID сотрудника"
+
+      responses:
+
+        "200":
+          description: "Профиль сотрудника без Sickday"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Profile"
+
+        "400":
+          description: "Неверный Egar ID"
+
+        "404":
+          description: "Сотрудник не найден"
+
+#  /profile/{egarId}/sickday:
+#    get:
+#      description: "Рассчёт и получение количества сикдеев сотрудника"
+#
+#      parameters:
+#        - name: egarId
+#          in: path
+#          required: true
+#          schema:
+#            type: string
+#          description: "Egar ID сотрудника"
+#
+#      responses:
+#
+#        "200":
+#          description: "Sickday и кол-во дней отпуска сотрудника"
+#          content:
+#            application/json:
+#              schema:
+#                $ref: "#/components/schemas/Sickday"
+#
+#        "400":
+#          description: "Неверный Egar ID"
+#
+#        "404":
+#          description: "Сотрудник не найден"
+#
+#  /profile/{egarId}/projects:
+#    get:
+#      description: "Поиск всех проектов сотрудника (Не готово, отсутствует макет списка проектов и необходимые данные)"
+#
+#      parameters:
+#        - name: egarId
+#          in: path
+#          required: true
+#          schema:
+#            type: string
+#          description: "Egar ID сотрудника"
+#
+#      responses:
+#
+#        "200":
+#          description: "Проекты сотрудника"
+#          content:
+#            application/json:
+#              schema:
+#                $ref: "#/components/schemas/Projects"
+#
+#        "400":
+#          description: "Неверный Egar ID"
+#
+#        "404":
+#          description: "Сотрудник не найден"
+
+
+
+
+
+components:
+  schemas:
+
+#    Projects:
+#      type: object
+#      properties:
+#        example:
+#          type: object
+#          example: null
+#
+#    Sickday:
+#      type: object
+#      properties:
+#        sickday_count:
+#          type: integer
+#          example: 4
+#
+#        vacation:
+#          type: integer
+#          example: 28
+    Experience:
+      type: object
+      properties:
+        years:
+          type: number
+          example: 1
+        months:
+          type: number
+          example: 7
+
+    Profile:
+      type: object
+      properties:
+        egar_id:
+          type: string
+          example: "MPetrova"
+
+        position:
+          type: string
+          example: "Разработчик"
+
+        grade:
+          type: string
+          example: "Middle"
+
+        avatar_url:
+          type: string
+          example: "https://t4597045.p.clickup-attachments.com/t4597045/e19a8d64-ba5b-47ce-84e6-dde62092d5f1_large.png"
+
+        onboard_date:
+          type: string
+          example: "1662032329524"
+
+        birth_date:
+          type: string
+          example: "1362032329524"
+
+        egar_experience:
+          $ref: "#/components/schemas/Experience"
+
+        work_email:
+          type: string
+          example: "pupkin@egar.com"
+
+        telegram:
+          type: string
+          example: "@petr"
+
+        skype:
+          type: string
+          example: "pupkin@egar.com"
+
+
+
