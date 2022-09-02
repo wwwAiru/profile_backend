@@ -37,11 +37,14 @@ public class ResponseMapper {
     public Profile toProfile(Task task) {
         Profile profile = new Profile();
 
+        TextField egarId = (TextField) task.customField(f -> f instanceof TextField && f.getName().contains("_egar_id"), "Egar ID");
         AttachmentField avatarField = (AttachmentField) task.customField(f -> f instanceof AttachmentField, "Аватар");
         DateField onBoardField = (DateField) task.customField(f -> f instanceof DateField && f.getName().contains("Дата выхода"), "Дата выхода");
         DateField birthDate = (DateField) task.customField(f -> f instanceof DateField && f.getName().contains("Дата рождения"), "Дата рождения");
-        DropdownField gradeField = (DropdownField) task.customField(f -> f instanceof DropdownField && f.getName().contains("Грейд"), "Грейд");
+        DropdownField gradeField = (DropdownField) task.customField(f -> f instanceof DropdownField && f.getName().equals("040 Грейд"), "Грейд");
         TextField workEmailField = (TextField) task.customField(f -> f instanceof TextField && f.getName().contains("Email рабочий"), "Email рабочий");
+        TextField telegramField = (TextField) task.customField(f -> f instanceof TextField && f.getName().contains("Телеграм"), "Телеграмм");
+        TextField skypeField = (TextField) task.customField(f -> f instanceof TextField && f.getName().contains("Skype"), "Skype");
         DropdownField positionField = (DropdownField) task.customField(f -> f instanceof DropdownField && f.getName().contains("Специализация основная"), "Специализация");
         LabelsField stackField = (LabelsField) task.customField(f -> f instanceof LabelsField && f.getName().contains("Инструмент тех-ий"), "Инструмент тех-ий");
 
@@ -50,11 +53,11 @@ public class ResponseMapper {
         profile.setBirthDate(birthDate.getValue());
         profile.setEgarExperience(countExperience(onBoardField));
         profile.setGrade(getGrade(gradeField));
-        profile.setEgarId(getEgarId(workEmailField));
+        profile.setEgarId(egarId.getValue());
         profile.setPosition(getPosition(positionField));
-        profile.setSkype(""); //TODO: Добавить Скайп в модель
-        profile.setTelegram(""); // TODO: Добавить Телегу в модель
-        profile.setWorkEmail(workEmailField.getName());
+        profile.setSkype(skypeField.getValue());
+        profile.setTelegram(telegramField.getValue());
+        profile.setWorkEmail(workEmailField.getValue());
         profile.setStack(getStack(stackField));
 
         return profile;
@@ -83,16 +86,11 @@ public class ResponseMapper {
     }
 
     private String getGrade(DropdownField dropdownField) {
-        return String.valueOf(dropdownField.getValue().getOrderIndex());
+        return String.valueOf(dropdownField.getValue().getName());
     }
 
     private String getPosition(DropdownField dropdownField) {
         return dropdownField.getValue().getName();
-    }
-
-    private String getEgarId(TextField textField) {
-        int end = textField.getValue().lastIndexOf("@");
-        return textField.getValue().substring(0, end);
     }
 
     private List<String> getStack(LabelsField labelsField) {
