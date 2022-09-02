@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import ru.egartech.profile.model.task.value.CustomField;
@@ -18,14 +19,19 @@ import ru.egartech.profile.model.task.value.date.DateField;
 import ru.egartech.profile.model.task.value.text.TextField;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
+@RequiredArgsConstructor
 public class CustomFieldsDeserializer extends JsonDeserializer<CustomField> {
+
+    private final ObjectMapper mapper;
 
     @Override
     public CustomField<?> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
@@ -71,7 +77,7 @@ public class CustomFieldsDeserializer extends JsonDeserializer<CustomField> {
 
     @SneakyThrows
     private AttachmentField parseAttachmentField(TreeNode treeNode, String name, FieldType type) {
-        ObjectMapper mapper = new ObjectMapper();
+        
         List<Attachment> values = mapper.readValue(treeNode.get("value").traverse(), new TypeReference<List<Attachment>>(){});
 
         return new AttachmentField()
@@ -82,7 +88,7 @@ public class CustomFieldsDeserializer extends JsonDeserializer<CustomField> {
 
     @SneakyThrows
     private LabelsField parseLabelsField(TreeNode treeNode, String name, FieldType type) {
-        ObjectMapper mapper = new ObjectMapper();
+        
 
         LabelTypeConfig typeConfig = mapper.readValue(treeNode.get("type_config").traverse(), LabelTypeConfig.class);
         Collection<String> values = mapper.readValue(treeNode.get("value").traverse(), new TypeReference<Collection<String>>() {});
@@ -99,7 +105,6 @@ public class CustomFieldsDeserializer extends JsonDeserializer<CustomField> {
 
     @SneakyThrows
     private DropdownField parseDropdownField(TreeNode treeNode, String name, FieldType type) {
-        ObjectMapper mapper = new ObjectMapper();
 
         DropdownTypeConfig typeConfig = mapper.readValue(treeNode.get("type_config").traverse(), DropdownTypeConfig.class);
         int index = mapper.readValue(treeNode.get("value").traverse(), Integer.class);
@@ -110,6 +115,7 @@ public class CustomFieldsDeserializer extends JsonDeserializer<CustomField> {
                 .setValue(typeConfig.byOrderIndex(index));
     }
 
+    @SneakyThrows
     private DateField parseDateField(TreeNode treeNode, String name, FieldType type) {
         return new DateField()
                 .setName(name)

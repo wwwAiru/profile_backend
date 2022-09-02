@@ -6,10 +6,13 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.egartech.profile.error.exception.CustomFieldEmptyException;
 import ru.egartech.profile.model.task.deserializer.CustomFieldsDeserializer;
 import ru.egartech.profile.model.task.value.CustomField;
+import ru.egartech.profile.model.task.value.attachment.AttachmentField;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 @Data
 @AllArgsConstructor
@@ -29,5 +32,12 @@ public class Task {
     @JsonProperty("custom_fields")
     private List<CustomField<?>> customFields;
 
+    public CustomField<?> customField(Predicate<CustomField<?>> predicate, String name) {
+        return customFields
+                .stream()
+                .filter(predicate)
+                .findFirst()
+                .orElseThrow(() -> new CustomFieldEmptyException(name));
+    }
 
 }

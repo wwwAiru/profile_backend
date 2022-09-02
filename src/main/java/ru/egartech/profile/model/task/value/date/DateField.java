@@ -6,6 +6,7 @@ import ru.egartech.profile.model.task.deserializer.FieldType;
 import ru.egartech.profile.model.task.value.CustomField;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 @Accessors(chain = true)

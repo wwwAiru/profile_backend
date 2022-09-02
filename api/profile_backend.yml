@@ -29,7 +29,7 @@ paths:
                 $ref: "#/components/schemas/Profile"
 
         "400":
-          description: "Неверный Egar ID"
+          description: "Неверная карточка сотрудника"
 
         "404":
           description: "Сотрудник не найден"
@@ -116,10 +116,10 @@ components:
       type: object
       properties:
         years:
-          type: number
+          type: integer
           example: 1
         months:
-          type: number
+          type: integer
           example: 7
 
     Profile:
