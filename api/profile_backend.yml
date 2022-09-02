@@ -137,6 +137,12 @@ components:
           type: string
           example: "Middle"
 
+        stack:
+          type: array
+          items:
+            type: string
+          example: ["Java", "Spring"]
+
         avatar_url:
           type: string
           example: "https://t4597045.p.clickup-attachments.com/t4597045/e19a8d64-ba5b-47ce-84e6-dde62092d5f1_large.png"

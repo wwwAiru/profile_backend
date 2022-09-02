@@ -10,6 +10,8 @@ import ru.egartech.profile.model.task.Task;
 import ru.egartech.profile.model.task.value.CustomField;
 import ru.egartech.profile.model.task.value.attachment.AttachmentField;
 import ru.egartech.profile.model.task.value.collection.DropdownField;
+import ru.egartech.profile.model.task.value.collection.LabelOption;
+import ru.egartech.profile.model.task.value.collection.LabelsField;
 import ru.egartech.profile.model.task.value.date.DateField;
 import ru.egartech.profile.model.task.value.text.TextField;
 
@@ -17,9 +19,11 @@ import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 @Component
 public class ResponseMapper {
@@ -38,7 +42,8 @@ public class ResponseMapper {
         DateField birthDate = (DateField) task.customField(f -> f instanceof DateField && f.getName().contains("Дата рождения"), "Дата рождения");
         DropdownField gradeField = (DropdownField) task.customField(f -> f instanceof DropdownField && f.getName().contains("Грейд"), "Грейд");
         TextField workEmailField = (TextField) task.customField(f -> f instanceof TextField && f.getName().contains("Email рабочий"), "Email рабочий");
-        DropdownField positionField = (DropdownField) task.customField(f -> f instanceof DropdownField && f.getName().contains("Специализация"), "Специализация");
+        DropdownField positionField = (DropdownField) task.customField(f -> f instanceof DropdownField && f.getName().contains("Специализация основная"), "Специализация");
+        LabelsField stackField = (LabelsField) task.customField(f -> f instanceof LabelsField && f.getName().contains("Инструмент тех-ий"), "Инструмент тех-ий");
 
         profile.setAvatarUrl(avatarField.getUrl());
         profile.setOnboardDate(onBoardField.getValue());
@@ -50,6 +55,7 @@ public class ResponseMapper {
         profile.setSkype(""); //TODO: Добавить Скайп в модель
         profile.setTelegram(""); // TODO: Добавить Телегу в модель
         profile.setWorkEmail(workEmailField.getName());
+        profile.setStack(getStack(stackField));
 
         return profile;
     }
@@ -87,5 +93,12 @@ public class ResponseMapper {
     private String getEgarId(TextField textField) {
         int end = textField.getValue().lastIndexOf("@");
         return textField.getValue().substring(0, end);
+    }
+
+    private List<String> getStack(LabelsField labelsField) {
+        return labelsField.getValue()
+                .stream()
+                .map(LabelOption::getLabel)
+                .collect(Collectors.toList());
     }
 }

@@ -45,7 +45,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
                 buildMessage("emptyfield", webRequest, exception.getField())
         );
 
-        return new ResponseEntity<>(errorResponse,HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorResponse,HttpStatus.BAD_REQUEST);
     }
 
     private String buildMessage(String code, WebRequest request, Object... args) {
