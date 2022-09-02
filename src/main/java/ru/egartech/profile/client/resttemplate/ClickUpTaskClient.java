@@ -28,7 +28,9 @@ public class ClickUpTaskClient {
 
         ClickUpResponse res = mapper.readValue(json, ClickUpResponse.class);
 
-        if (res.getTasks().size() < 1) throw new NotFoundException();
+        if (res.getTasks().size() < 1) throw new NotFoundException(egarId.getValue());
+
+//        throw new RuntimeException();
 
         return res.getTasks()
                 .stream()

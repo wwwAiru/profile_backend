@@ -1,5 +1,7 @@
 package ru.egartech.profile.error;
 
+import lombok.AllArgsConstructor;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -9,28 +11,44 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import ru.egartech.profile.error.exception.CustomFieldEmptyException;
 import ru.egartech.profile.error.exception.NotFoundException;
 
+import java.util.Locale;
+
 @ControllerAdvice
+@AllArgsConstructor
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
+    private final MessageSource messageSource;
 
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<Object> handleMissedException(Exception exception, WebRequest webRequest) {
-        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), exception.getClass().getSimpleName());
-        exception.printStackTrace();
-        return new ResponseEntity<>(errorResponse,HttpStatus.INTERNAL_SERVER_ERROR);
+
+        ErrorResponse errorResponse = new ErrorResponse(
+                buildMessage("unknownerror", webRequest, exception.getClass().getSimpleName())
+        );
+
+        return new ResponseEntity<>(errorResponse,HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(NotFoundException.class)
-    protected ResponseEntity<Object> handleNotFoundException(Exception exception, WebRequest webRequest) {
-        ErrorResponse errorResponse = new ErrorResponse("Сотрудника с таким EgarId не существует!", exception.getClass().getSimpleName());
-        exception.printStackTrace();
+    protected ResponseEntity<Object> handleNotFoundException(NotFoundException exception, WebRequest webRequest) {
+
+        ErrorResponse errorResponse = new ErrorResponse(
+                buildMessage("noegarid", webRequest, exception.getId())
+        );
+
         return new ResponseEntity<>(errorResponse,HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(CustomFieldEmptyException.class)
     protected ResponseEntity<Object> handleCustomFieldEmptyException(CustomFieldEmptyException exception, WebRequest webRequest) {
-        ErrorResponse errorResponse = new ErrorResponse("Нужное поле сотрудника отсутствует или пусто: " + exception.getField(), exception.getClass().getSimpleName());
-        exception.printStackTrace();
+
+        ErrorResponse errorResponse = new ErrorResponse(
+                buildMessage("emptyfield", webRequest, exception.getField())
+        );
+
         return new ResponseEntity<>(errorResponse,HttpStatus.NOT_FOUND);
     }
 
+    private String buildMessage(String code, WebRequest request, Object... args) {
+        return messageSource.getMessage(code, args, request.getLocale());
+    }
 }
