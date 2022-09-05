@@ -1,3 +1,15 @@
 openfeign:
   basic:
     token:
+
+fields:
+  egar_id: "836c9684-0c71-4714-aff2-900b0ded0685"
+  avatar: "d01ad323-e69b-4413-9d57-256613e62ee0"
+  onboard_date: "ea8cc2d2-4255-4cf8-b207-0b96ff6e4987"
+  birthdate: "15b5edd5-7b26-4a2b-9def-e0c211731265"
+  grade: "e7e89fd8-c5a6-4ae9-84ff-00bf3292033e"
+  work_email: "5c6128d2-1c1f-420d-890a-e85afd61b123"
+  telegram: "7dcb1177-6071-40c0-83dc-5c1b45cc7a3c"
+  skype: "6f023e63-c487-40cb-8eb3-bb582557e4a0"
+  position: "33064c03-b21f-4f93-b74d-b2ef4b081208"
+  stack: "948c4322-be0e-473a-9f54-52b1cb6d428b"

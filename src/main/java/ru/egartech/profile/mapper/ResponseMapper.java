@@ -4,6 +4,7 @@ package ru.egartech.profile.mapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import ru.egartech.profile.config.CustomFieldProperties;
 import ru.egartech.profile.model.Experience;
 import ru.egartech.profile.model.Profile;
 import ru.egartech.taskmapper.TaskMapper;
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ResponseMapper {
 
+    private final CustomFieldProperties properties;
     private final TaskMapper taskMapper;
 
     public <T> ResponseEntity<T> toResponse(T t) {
@@ -38,16 +40,16 @@ public class ResponseMapper {
     public Profile toProfile(TaskDto task) {
         Profile profile = new Profile();
 
-        TextFieldDto egarId = task.customField("836c9684-0c71-4714-aff2-900b0ded0685");
-        AttachmentFieldDto avatarField = task.customField("d01ad323-e69b-4413-9d57-256613e62ee0");
-        DateFieldDto onBoardField = task.customField("ea8cc2d2-4255-4cf8-b207-0b96ff6e4987");
-        DateFieldDto birthDate = task.customField("15b5edd5-7b26-4a2b-9def-e0c211731265");
-        DropdownFieldDto gradeField = task.customField("e7e89fd8-c5a6-4ae9-84ff-00bf3292033e");
-        EmailFieldDto workEmailField = task.customField("5c6128d2-1c1f-420d-890a-e85afd61b123");
-        TextFieldDto telegramField = task.customField("7dcb1177-6071-40c0-83dc-5c1b45cc7a3c");
-        TextFieldDto skypeField = task.customField("6f023e63-c487-40cb-8eb3-bb582557e4a0");
-        DropdownFieldDto positionField = task.customField("33064c03-b21f-4f93-b74d-b2ef4b081208");
-        LabelsFieldDto stackField = task.customField("948c4322-be0e-473a-9f54-52b1cb6d428b");
+        TextFieldDto egarId = task.customField(properties.EGAR_ID);
+        AttachmentFieldDto avatarField = task.customField(properties.AVATAR);
+        DateFieldDto onBoardField = task.customField(properties.ONBOARD_DATE);
+        DateFieldDto birthDate = task.customField(properties.BIRTH_DATE);
+        DropdownFieldDto gradeField = task.customField(properties.GRADE);
+        EmailFieldDto workEmailField = task.customField(properties.WORK_EMAIL);
+        TextFieldDto telegramField = task.customField(properties.TELEGRAM);
+        TextFieldDto skypeField = task.customField(properties.SKYPE);
+        DropdownFieldDto positionField = task.customField(properties.POSITION);
+        LabelsFieldDto stackField = task.customField(properties.STACK);
 
         profile.setAvatarUrl(avatarField.getUrl());
         profile.setOnboardDate(onBoardField.getValue());

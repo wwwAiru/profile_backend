@@ -8,10 +8,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import ru.egartech.profile.error.exception.CustomFieldEmptyException;
 import ru.egartech.profile.error.exception.NotFoundException;
-
-import java.util.Locale;
+import ru.egartech.taskmapper.exception.CustomFieldNotFoundException;
 
 @ControllerAdvice
 @AllArgsConstructor
@@ -40,11 +38,11 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorResponse,HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(CustomFieldEmptyException.class)
-    protected ResponseEntity<Object> handleCustomFieldEmptyException(CustomFieldEmptyException exception, WebRequest webRequest) {
+    @ExceptionHandler(CustomFieldNotFoundException.class)
+    protected ResponseEntity<Object> handleCustomFieldNotFoundException(CustomFieldNotFoundException exception, WebRequest webRequest) {
 
         ErrorResponse errorResponse = new ErrorResponse(
-                buildMessage("emptyfield", webRequest, exception.getField())
+                buildMessage("emptyfield", webRequest, exception.getMessage())
         );
 
         return new ResponseEntity<>(errorResponse,HttpStatus.BAD_REQUEST);
