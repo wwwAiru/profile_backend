@@ -5,8 +5,6 @@ import lombok.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import ru.egartech.profile.client.EgarIdField;
-import ru.egartech.profile.error.exception.NotFoundException;
-import ru.egartech.profile.model.task.Task;
 
 import java.util.List;
 
@@ -20,19 +18,11 @@ public class ClickUpTaskClient {
     private final RestTemplate rest;
 
     @SneakyThrows
-    public Task getTaskByListIdAndEgarId(String listId, EgarIdField egarId) {
+    public String getTaskByListIdAndEgarId(String listId, EgarIdField egarId) {
 
         String customField = mapper.writeValueAsString(List.of(egarId));
         String url = URL.replace("{list_id}", listId);
-        String json = rest.getForObject(url, String.class, customField);
 
-        ClickUpResponse res = mapper.readValue(json, ClickUpResponse.class);
-
-        if (res.getTasks().size() < 1) throw new NotFoundException(egarId.getValue());
-
-        return res.getTasks()
-                .stream()
-                .findFirst()
-                .orElseThrow();
+        return rest.getForObject(url, String.class, customField);
     }
 }

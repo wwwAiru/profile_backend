@@ -21,6 +21,8 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(Exception.class)
     protected ResponseEntity<Object> handleMissedException(Exception exception, WebRequest webRequest) {
 
+        exception.printStackTrace();
+
         ErrorResponse errorResponse = new ErrorResponse(
                 buildMessage("unknownerror", webRequest, exception.getClass().getSimpleName())
         );

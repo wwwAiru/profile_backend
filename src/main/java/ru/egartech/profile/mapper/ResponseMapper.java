@@ -1,32 +1,33 @@
 package ru.egartech.profile.mapper;
 
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import ru.egartech.profile.client.EgarIdField;
 import ru.egartech.profile.model.Experience;
 import ru.egartech.profile.model.Profile;
-import ru.egartech.profile.model.task.Task;
-import ru.egartech.profile.model.task.value.CustomField;
-import ru.egartech.profile.model.task.value.attachment.AttachmentField;
-import ru.egartech.profile.model.task.value.collection.DropdownField;
-import ru.egartech.profile.model.task.value.collection.LabelOption;
-import ru.egartech.profile.model.task.value.collection.LabelsField;
-import ru.egartech.profile.model.task.value.date.DateField;
-import ru.egartech.profile.model.task.value.text.TextField;
+import ru.egartech.taskmapper.TaskMapper;
+import ru.egartech.taskmapper.dto.task.TaskDto;
+import ru.egartech.taskmapper.dto.task.customfield.field.attachment.AttachmentFieldDto;
+import ru.egartech.taskmapper.dto.task.customfield.field.date.DateFieldDto;
+import ru.egartech.taskmapper.dto.task.customfield.field.dropdown.DropdownFieldDto;
+import ru.egartech.taskmapper.dto.task.customfield.field.email.EmailFieldDto;
+import ru.egartech.taskmapper.dto.task.customfield.field.label.LabelOptionDto;
+import ru.egartech.taskmapper.dto.task.customfield.field.label.LabelsFieldDto;
+import ru.egartech.taskmapper.dto.task.customfield.field.text.TextFieldDto;
 
-import java.time.*;
-import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
-import java.util.Date;
+import java.time.Instant;
+import java.time.Period;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class ResponseMapper {
+
+    private final TaskMapper taskMapper;
 
     public <T> ResponseEntity<T> toResponse(T t) {
         return ResponseEntity.of(
@@ -34,19 +35,19 @@ public class ResponseMapper {
         );
     }
 
-    public Profile toProfile(Task task) {
+    public Profile toProfile(TaskDto task) {
         Profile profile = new Profile();
 
-        TextField egarId = (TextField) task.customField(f -> f instanceof TextField && f.getName().contains("_egar_id"), "Egar ID");
-        AttachmentField avatarField = (AttachmentField) task.customField(f -> f instanceof AttachmentField, "Аватар");
-        DateField onBoardField = (DateField) task.customField(f -> f instanceof DateField && f.getName().contains("Дата выхода"), "Дата выхода");
-        DateField birthDate = (DateField) task.customField(f -> f instanceof DateField && f.getName().contains("Дата рождения"), "Дата рождения");
-        DropdownField gradeField = (DropdownField) task.customField(f -> f instanceof DropdownField && f.getName().equals("040 Грейд"), "Грейд");
-        TextField workEmailField = (TextField) task.customField(f -> f instanceof TextField && f.getName().contains("Email рабочий"), "Email рабочий");
-        TextField telegramField = (TextField) task.customField(f -> f instanceof TextField && f.getName().contains("Телеграм"), "Телеграмм");
-        TextField skypeField = (TextField) task.customField(f -> f instanceof TextField && f.getName().contains("Skype"), "Skype");
-        DropdownField positionField = (DropdownField) task.customField(f -> f instanceof DropdownField && f.getName().contains("Специализация основная"), "Специализация");
-        LabelsField stackField = (LabelsField) task.customField(f -> f instanceof LabelsField && f.getName().contains("Инструмент тех-ий"), "Инструмент тех-ий");
+        TextFieldDto egarId = task.customField("836c9684-0c71-4714-aff2-900b0ded0685");
+        AttachmentFieldDto avatarField = task.customField("d01ad323-e69b-4413-9d57-256613e62ee0");
+        DateFieldDto onBoardField = task.customField("ea8cc2d2-4255-4cf8-b207-0b96ff6e4987");
+        DateFieldDto birthDate = task.customField("15b5edd5-7b26-4a2b-9def-e0c211731265");
+        DropdownFieldDto gradeField = task.customField("e7e89fd8-c5a6-4ae9-84ff-00bf3292033e");
+        EmailFieldDto workEmailField = task.customField("5c6128d2-1c1f-420d-890a-e85afd61b123");
+        TextFieldDto telegramField = task.customField("7dcb1177-6071-40c0-83dc-5c1b45cc7a3c");
+        TextFieldDto skypeField = task.customField("6f023e63-c487-40cb-8eb3-bb582557e4a0");
+        DropdownFieldDto positionField = task.customField("33064c03-b21f-4f93-b74d-b2ef4b081208");
+        LabelsFieldDto stackField = task.customField("948c4322-be0e-473a-9f54-52b1cb6d428b");
 
         profile.setAvatarUrl(avatarField.getUrl());
         profile.setOnboardDate(onBoardField.getValue());
@@ -63,7 +64,7 @@ public class ResponseMapper {
         return profile;
     }
 
-    private Experience countExperience(DateField dateField) {
+    private Experience countExperience(DateFieldDto dateField) {
         Experience experience = new Experience();
 
         Instant onBoard = Instant.ofEpochMilli(Long.parseLong(dateField.getValue()));
@@ -85,18 +86,18 @@ public class ResponseMapper {
         return experience;
     }
 
-    private String getGrade(DropdownField dropdownField) {
+    private String getGrade(DropdownFieldDto dropdownField) {
         return String.valueOf(dropdownField.getValue().getName());
     }
 
-    private String getPosition(DropdownField dropdownField) {
+    private String getPosition(DropdownFieldDto dropdownField) {
         return dropdownField.getValue().getName();
     }
 
-    private List<String> getStack(LabelsField labelsField) {
+    private List<String> getStack(LabelsFieldDto labelsField) {
         return labelsField.getValue()
                 .stream()
-                .map(LabelOption::getLabel)
+                .map(LabelOptionDto::getLabel)
                 .collect(Collectors.toList());
     }
 }
