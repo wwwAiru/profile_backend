@@ -1,10 +1,11 @@
 package ru.egartech.profile.client.resttemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.*;
+import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import ru.egartech.profile.client.EgarIdField;
+import ru.egartech.profile.client.EgarIdFieldFactory;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class ClickUpTaskClient {
     private final RestTemplate rest;
 
     @SneakyThrows
-    public String getTaskByListIdAndEgarId(String listId, EgarIdField egarId) {
+    public String getTaskByListIdAndEgarId(String listId, EgarIdFieldFactory.EgarId egarId) {
 
         String customField = mapper.writeValueAsString(List.of(egarId));
         String url = URL.replace("{list_id}", listId);

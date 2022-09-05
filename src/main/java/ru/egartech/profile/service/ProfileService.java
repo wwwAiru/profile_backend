@@ -1,12 +1,11 @@
 package ru.egartech.profile.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.egartech.profile.api.ProfileApiDelegate;
-import ru.egartech.profile.client.EgarIdField;
-import ru.egartech.profile.client.feign.ClickUpClient;
+import ru.egartech.profile.client.EgarIdFieldFactory;
 import ru.egartech.profile.client.resttemplate.ClickUpTaskClient;
 import ru.egartech.profile.mapper.ResponseMapper;
 import ru.egartech.profile.model.Profile;
@@ -16,17 +15,19 @@ import ru.egartech.taskmapper.TaskMapper;
 @RequiredArgsConstructor
 public class ProfileService implements ProfileApiDelegate {
 
-    private final ClickUpClient clickUpClient;
     private final ClickUpTaskClient clickUpTaskClient;
+
+    private final EgarIdFieldFactory egarIdFieldFactory;
 
     private final TaskMapper taskMapper;
     private final ResponseMapper resMapper;
 
-    private final ObjectMapper mapper;
+    @Value("${lists.dev}")
+    private String devListId;
 
     @Override
     public ResponseEntity<Profile> profileEgarIdGet(String egarId) {
-        String json = clickUpTaskClient.getTaskByListIdAndEgarId("180311895", new EgarIdField(egarId));
+        String json = clickUpTaskClient.getTaskByListIdAndEgarId(devListId, egarIdFieldFactory.of(egarId));
 
         return resMapper.toResponse(
                 resMapper.toProfile(
