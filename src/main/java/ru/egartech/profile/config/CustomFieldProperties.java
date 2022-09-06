@@ -16,6 +16,7 @@ public class CustomFieldProperties {
     public final String SKYPE;
     public final String POSITION;
     public final String STACK;
+    public final String WHATSAPP;
 
     public CustomFieldProperties(
             @Value("${fields.egar_id}")
@@ -46,7 +47,10 @@ public class CustomFieldProperties {
             String POSITION,
 
             @Value("${fields.stack}")
-            String STACK
+            String STACK,
+
+            @Value("${fields.whatsapp}")
+            String whatsapp
     ) {
         this.EGAR_ID = EGAR_ID;
         this.AVATAR = AVATAR;
@@ -58,5 +62,7 @@ public class CustomFieldProperties {
         this.SKYPE = SKYPE;
         this.POSITION = POSITION;
         this.STACK = STACK;
+        this.WHATSAPP = whatsapp;
     }
+
 }

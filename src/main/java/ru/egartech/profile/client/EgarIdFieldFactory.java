@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class EgarIdFieldFactory {
 
-    @JsonProperty("field_id")
     @Value("${fields.egar_id}")
     private String fieldId;
     private final String operator = "=";
@@ -23,6 +22,7 @@ public class EgarIdFieldFactory {
     @RequiredArgsConstructor
     @Data
     public static class EgarId {
+        @JsonProperty("field_id")
         private final String fieldId;
         private final String operator = "=";
         private final String value;
