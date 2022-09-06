@@ -1,4 +1,4 @@
-package ru.egartech.profile.client.feign;
+package ru.egartech.profile.config.client.feign;
 
 import feign.Request;
 import feign.RequestInterceptor;

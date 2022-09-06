@@ -1,4 +1,4 @@
-package ru.egartech.profile.client.resttemplate;
+package ru.egartech.profile.config.client.resttemplate;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

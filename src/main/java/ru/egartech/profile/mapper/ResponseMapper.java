@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import ru.egartech.profile.config.CustomFieldProperties;
 import ru.egartech.profile.model.Experience;
 import ru.egartech.profile.model.Profile;
-import ru.egartech.taskmapper.TaskMapper;
 import ru.egartech.taskmapper.dto.task.TaskDto;
 import ru.egartech.taskmapper.dto.task.customfield.field.attachment.AttachmentFieldDto;
 import ru.egartech.taskmapper.dto.task.customfield.field.date.DateFieldDto;
@@ -16,6 +15,7 @@ import ru.egartech.taskmapper.dto.task.customfield.field.email.EmailFieldDto;
 import ru.egartech.taskmapper.dto.task.customfield.field.label.LabelOptionDto;
 import ru.egartech.taskmapper.dto.task.customfield.field.label.LabelsFieldDto;
 import ru.egartech.taskmapper.dto.task.customfield.field.text.TextFieldDto;
+import ru.egartech.taskmapper.dto.task.customfield.field.url.UrlFieldDto;
 
 import java.time.Instant;
 import java.time.Period;
@@ -29,7 +29,6 @@ import java.util.stream.Collectors;
 public class ResponseMapper {
 
     private final CustomFieldProperties properties;
-    private final TaskMapper taskMapper;
 
     public <T> ResponseEntity<T> toResponse(T t) {
         return ResponseEntity.of(
@@ -38,6 +37,7 @@ public class ResponseMapper {
     }
 
     public Profile toProfile(TaskDto task) {
+
         Profile profile = new Profile();
 
         TextFieldDto egarId = task.customField(properties.EGAR_ID);
@@ -45,6 +45,7 @@ public class ResponseMapper {
         DateFieldDto onBoardField = task.customField(properties.ONBOARD_DATE);
         DateFieldDto birthDate = task.customField(properties.BIRTH_DATE);
         DropdownFieldDto gradeField = task.customField(properties.GRADE);
+        UrlFieldDto whatsappField = task.customField(properties.WHATSAPP);
         EmailFieldDto workEmailField = task.customField(properties.WORK_EMAIL);
         TextFieldDto telegramField = task.customField(properties.TELEGRAM);
         TextFieldDto skypeField = task.customField(properties.SKYPE);
@@ -62,6 +63,7 @@ public class ResponseMapper {
         profile.setTelegram(telegramField.getValue());
         profile.setWorkEmail(workEmailField.getValue());
         profile.setStack(getStack(stackField));
+        profile.setWhatsapp(whatsappField.getValue());
 
         return profile;
     }

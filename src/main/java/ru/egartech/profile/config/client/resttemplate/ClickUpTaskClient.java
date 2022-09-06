@@ -1,11 +1,11 @@
-package ru.egartech.profile.client.resttemplate;
+package ru.egartech.profile.config.client.resttemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import ru.egartech.profile.client.EgarIdFieldFactory;
+import ru.egartech.profile.config.client.EgarIdFieldFactory;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package ru.egartech.profile.client.resttemplate;
+package ru.egartech.profile.config.client.resttemplate;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
