@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ru.egartech.profile.error.exception.NotFoundException;
-import ru.egartech.taskmapper.exception.CustomFieldNotFoundException;
+import ru.egartech.taskmapper.exception.customfield.CustomFieldNotFoundException;
 
 @ControllerAdvice
 @AllArgsConstructor

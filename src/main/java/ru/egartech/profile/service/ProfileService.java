@@ -5,34 +5,39 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.egartech.profile.api.ProfileApiDelegate;
-import ru.egartech.profile.config.client.EgarIdFieldFactory;
-import ru.egartech.profile.config.client.resttemplate.ClickUpTaskClient;
+import ru.egartech.profile.config.CustomFieldProperties;
 import ru.egartech.profile.mapper.ResponseMapper;
 import ru.egartech.profile.model.Profile;
-import ru.egartech.taskmapper.TaskMapper;
+import ru.egartech.taskmapper.api.CustomFieldsRequest;
+import ru.egartech.taskmapper.api.TaskClient;
+import ru.egartech.taskmapper.dto.task.TasksDto;
 
 @Service
 @RequiredArgsConstructor
 public class ProfileService implements ProfileApiDelegate {
 
-    private final ClickUpTaskClient clickUpTaskClient;
+    private final TaskClient client;
 
-    private final EgarIdFieldFactory egarIdFieldFactory;
-
-    private final TaskMapper taskMapper;
     private final ResponseMapper resMapper;
+
+    private final CustomFieldProperties properties;
 
     @Value("${lists.dev}")
     private String devListId;
 
     @Override
     public ResponseEntity<Profile> profileEgarIdGet(String egarId) {
-        String json = clickUpTaskClient.getTaskByListIdAndEgarId(devListId, egarIdFieldFactory.of(egarId));
+        TasksDto tasks = client.getTasksByCustomField(
+                devListId,
+                CustomFieldsRequest.builder()
+                        .fieldId(properties.EGAR_ID)
+                        .operator("=")
+                        .value(egarId)
+                        .build()
+        );
 
         return resMapper.toResponse(
-                resMapper.toProfile(
-                        taskMapper.mapList(json).get()
-                )
+                resMapper.toProfile(tasks.get())
         );
     }
 

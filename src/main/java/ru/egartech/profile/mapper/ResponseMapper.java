@@ -9,13 +9,10 @@ import ru.egartech.profile.model.Experience;
 import ru.egartech.profile.model.Profile;
 import ru.egartech.taskmapper.dto.task.TaskDto;
 import ru.egartech.taskmapper.dto.task.customfield.field.attachment.AttachmentFieldDto;
-import ru.egartech.taskmapper.dto.task.customfield.field.date.DateFieldDto;
 import ru.egartech.taskmapper.dto.task.customfield.field.dropdown.DropdownFieldDto;
-import ru.egartech.taskmapper.dto.task.customfield.field.email.EmailFieldDto;
 import ru.egartech.taskmapper.dto.task.customfield.field.label.LabelOptionDto;
 import ru.egartech.taskmapper.dto.task.customfield.field.label.LabelsFieldDto;
 import ru.egartech.taskmapper.dto.task.customfield.field.text.TextFieldDto;
-import ru.egartech.taskmapper.dto.task.customfield.field.url.UrlFieldDto;
 
 import java.time.Instant;
 import java.time.Period;
@@ -42,11 +39,11 @@ public class ResponseMapper {
 
         TextFieldDto egarId = task.customField(properties.EGAR_ID);
         AttachmentFieldDto avatarField = task.customField(properties.AVATAR);
-        DateFieldDto onBoardField = task.customField(properties.ONBOARD_DATE);
-        DateFieldDto birthDate = task.customField(properties.BIRTH_DATE);
+        TextFieldDto onBoardField = task.customField(properties.ONBOARD_DATE);
+        TextFieldDto birthDate = task.customField(properties.BIRTH_DATE);
         DropdownFieldDto gradeField = task.customField(properties.GRADE);
-        UrlFieldDto whatsappField = task.customField(properties.WHATSAPP);
-        EmailFieldDto workEmailField = task.customField(properties.WORK_EMAIL);
+        TextFieldDto whatsappField = task.customField(properties.WHATSAPP);
+        TextFieldDto workEmailField = task.customField(properties.WORK_EMAIL);
         TextFieldDto telegramField = task.customField(properties.TELEGRAM);
         TextFieldDto skypeField = task.customField(properties.SKYPE);
         DropdownFieldDto positionField = task.customField(properties.POSITION);
@@ -68,7 +65,7 @@ public class ResponseMapper {
         return profile;
     }
 
-    private Experience countExperience(DateFieldDto dateField) {
+    private Experience countExperience(TextFieldDto dateField) {
         Experience experience = new Experience();
 
         Instant onBoard = Instant.ofEpochMilli(Long.parseLong(dateField.getValue()));
