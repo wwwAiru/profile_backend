@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import ru.egartech.profile.config.CustomFieldProperties;
+import ru.egartech.profile.model.DropdownOption;
 import ru.egartech.profile.model.Experience;
 import ru.egartech.profile.model.Profile;
 import ru.egartech.sdk.dto.task.TaskDto;
@@ -55,6 +56,7 @@ public class ResponseMapper {
         profile.setEgarExperience(countExperience(onBoardField));
         profile.setGrade(getGrade(gradeField));
         profile.setEgarId(egarId.getValue());
+        profile.setPositionOptionsId(properties.POSITION);
         profile.setPosition(getPosition(positionField));
         profile.setSkype(skypeField.getValue());
         profile.setTelegram(telegramField.getValue());
@@ -91,8 +93,11 @@ public class ResponseMapper {
         return String.valueOf(dropdownField.getValue().getName());
     }
 
-    private String getPosition(DropdownFieldDto dropdownField) {
-        return dropdownField.getValue().getName();
+    private DropdownOption getPosition(DropdownFieldDto dropdownField) {
+        DropdownOption dropdownOption = new DropdownOption();
+        dropdownOption.setName(dropdownField.getValue().getName());
+        dropdownOption.setIndex(dropdownField.getValue().getOrderIndex());
+        return dropdownOption;
     }
 
     private List<String> getStack(LabelsFieldDto labelsField) {
