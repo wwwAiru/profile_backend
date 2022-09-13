@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ru.egartech.profile.error.exception.NotFoundException;
-import ru.egartech.taskmapper.exception.customfield.CustomFieldNotFoundException;
+import ru.egartech.sdk.exception.customfield.CustomFieldNotFoundException;
 
 @ControllerAdvice
 @AllArgsConstructor
@@ -25,7 +25,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
                 buildMessage("unknownerror", webRequest, exception.getClass().getSimpleName())
         );
 
-        return new ResponseEntity<>(errorResponse,HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorResponse,HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(NotFoundException.class)

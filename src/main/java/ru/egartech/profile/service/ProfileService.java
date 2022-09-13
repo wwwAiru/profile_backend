@@ -1,43 +1,49 @@
 package ru.egartech.profile.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import ru.egartech.profile.api.ProfileApiDelegate;
 import ru.egartech.profile.config.CustomFieldProperties;
+import ru.egartech.profile.error.exception.MultipleTasksByEgarIdException;
 import ru.egartech.profile.mapper.ResponseMapper;
 import ru.egartech.profile.model.Profile;
-import ru.egartech.taskmapper.api.CustomFieldsRequest;
-import ru.egartech.taskmapper.api.TaskClient;
-import ru.egartech.taskmapper.dto.task.TasksDto;
+import ru.egartech.sdk.api.ListTaskClient;
+import ru.egartech.sdk.dto.task.CustomFieldRequest;
+import ru.egartech.sdk.dto.task.TasksDto;
+
+import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
 public class ProfileService implements ProfileApiDelegate {
 
-    private final TaskClient client;
-
+    private final ListTaskClient client;
     private final ResponseMapper resMapper;
+    private final CustomFieldProperties fieldProperties;
 
-    private final CustomFieldProperties properties;
-
-    @Value("${lists.dev}")
-    private String devListId;
 
     @Override
     public ResponseEntity<Profile> profileEgarIdGet(String egarId) {
-        TasksDto tasks = client.getTasksByCustomField(
-                devListId,
-                CustomFieldsRequest.builder()
-                        .fieldId(properties.EGAR_ID)
-                        .operator("=")
-                        .value(egarId)
-                        .build()
+        List<TasksDto> tasks = client.getTasksByCustomFields(
+                CustomFieldRequest
+                        .create()
+                        .setFieldId(fieldProperties.EGAR_ID)
+                        .setValue(egarId)
         );
 
+        if (tasks.size() > 1) {
+            throw new MultipleTasksByEgarIdException(egarId);
+        }
+
         return resMapper.toResponse(
-                resMapper.toProfile(tasks.get())
+                resMapper.toProfile(
+                        Objects.requireNonNull(
+                                CollectionUtils.firstElement(tasks)
+                        ).getFirstTask()
+                )
         );
     }
 

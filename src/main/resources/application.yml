@@ -1,6 +1,11 @@
 clickup:
   api:
-    token:
+    tokens:
+  list:
+    devs: "180311895"
+    analytics: "180311904"
+    testers: "180311899"
+
 
 fields:
   egar_id: "836c9684-0c71-4714-aff2-900b0ded0685"

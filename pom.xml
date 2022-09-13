@@ -24,17 +24,17 @@
 
         <dependency>
             <groupId>ru.egartech</groupId>
-            <artifactId>click-up-sdk</artifactId>
+            <artifactId>click-up-sdk-starter</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
 <!--        <dependency>-->
 <!--            <groupId>ru.egartech</groupId>-->
-<!--            <artifactId>taskmapper</artifactId>-->
+<!--            <artifactId>sdk</artifactId>-->
 <!--            <version>0.0.1-SNAPSHOT</version>-->
 <!--            <scope>system</scope>-->
 <!--            <type>jar</type>-->
-<!--            <systemPath>${project.basedir}/libs/taskmapper-0.0.1-SNAPSHOT.jar</systemPath>-->
+<!--            <systemPath>${project.basedir}/libs/sdk-0.0.1-SNAPSHOT.jar</systemPath>-->
 <!--        </dependency>-->
 
         <dependency>
@@ -200,6 +200,36 @@
 
                 </executions>
             </plugin>
+
+<!--            <plugin>-->
+<!--                <groupId>org.openapitools</groupId>-->
+<!--                <artifactId>openapi-generator-maven-plugin</artifactId>-->
+<!--                &lt;!&ndash; RELEASE_VERSION &ndash;&gt;-->
+<!--                <version>6.0.1</version>-->
+<!--                &lt;!&ndash; /RELEASE_VERSION &ndash;&gt;-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <goals>-->
+<!--                            <goal>generate</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <inputSpec>${project.basedir}/api/profile_backend.yml</inputSpec>-->
+<!--                            <generatorName>egartech-java-spring</generatorName>-->
+<!--                            <configOptions>-->
+<!--                                <sourceFolder>src</sourceFolder>-->
+<!--                            </configOptions>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+
+<!--                <dependencies>-->
+<!--                    <dependency>-->
+<!--                        <groupId>ru.egartech</groupId>-->
+<!--                        <artifactId>egartech-java-spring-openapi-generator</artifactId>-->
+<!--                        <version>0.0.1-SNAPSHOT</version>-->
+<!--                    </dependency>-->
+<!--                </dependencies>-->
+<!--            </plugin>-->
 
         </plugins>
     </build>

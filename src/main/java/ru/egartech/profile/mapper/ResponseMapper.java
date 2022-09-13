@@ -7,12 +7,12 @@ import org.springframework.stereotype.Component;
 import ru.egartech.profile.config.CustomFieldProperties;
 import ru.egartech.profile.model.Experience;
 import ru.egartech.profile.model.Profile;
-import ru.egartech.taskmapper.dto.task.TaskDto;
-import ru.egartech.taskmapper.dto.task.customfield.field.attachment.AttachmentFieldDto;
-import ru.egartech.taskmapper.dto.task.customfield.field.dropdown.DropdownFieldDto;
-import ru.egartech.taskmapper.dto.task.customfield.field.label.LabelOptionDto;
-import ru.egartech.taskmapper.dto.task.customfield.field.label.LabelsFieldDto;
-import ru.egartech.taskmapper.dto.task.customfield.field.text.TextFieldDto;
+import ru.egartech.sdk.dto.task.TaskDto;
+import ru.egartech.sdk.dto.task.customfield.field.attachment.AttachmentFieldDto;
+import ru.egartech.sdk.dto.task.customfield.field.dropdown.DropdownFieldDto;
+import ru.egartech.sdk.dto.task.customfield.field.label.LabelOptionDto;
+import ru.egartech.sdk.dto.task.customfield.field.label.LabelsFieldDto;
+import ru.egartech.sdk.dto.task.customfield.field.text.TextFieldDto;
 
 import java.time.Instant;
 import java.time.Period;
