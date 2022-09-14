@@ -8,7 +8,8 @@ import ru.egartech.profile.api.ProfileApiDelegate;
 import ru.egartech.profile.config.CustomFieldProperties;
 import ru.egartech.profile.error.exception.MultipleTasksByEgarIdException;
 import ru.egartech.profile.mapper.ResponseMapper;
-import ru.egartech.profile.model.DropdownOption;
+import ru.egartech.profile.model.FieldlessResponseDropdownOption;
+import ru.egartech.profile.model.FieldlessResponseLabelsOption;
 import ru.egartech.profile.model.Profile;
 import ru.egartech.sdk.api.CustomFieldClient;
 import ru.egartech.sdk.api.ListTaskClient;
@@ -17,6 +18,8 @@ import ru.egartech.sdk.dto.task.FieldsDto;
 import ru.egartech.sdk.dto.task.TasksDto;
 import ru.egartech.sdk.dto.task.customfield.field.dropdown.DropdownFieldDto;
 import ru.egartech.sdk.dto.task.customfield.field.dropdown.DropdownTypeConfig;
+import ru.egartech.sdk.dto.task.customfield.field.label.LabelTypeConfig;
+import ru.egartech.sdk.dto.task.customfield.field.label.LabelsFieldDto;
 
 import java.util.List;
 import java.util.Objects;
@@ -53,7 +56,7 @@ public class ProfileService implements ProfileApiDelegate {
     }
 
     @Override
-    public ResponseEntity<List<DropdownOption>> profileDropdownListIdFieldIdGet(
+    public ResponseEntity<List<FieldlessResponseDropdownOption>> profileDropdownListListIdFieldFieldIdGet(
             Integer listId,
             String fieldId
     ) {
@@ -67,10 +70,31 @@ public class ProfileService implements ProfileApiDelegate {
                         .getLabelOptions()
                         .stream()
                         .map(d -> {
-                            DropdownOption dropdownOption = new DropdownOption();
+                            var dropdownOption = new FieldlessResponseDropdownOption();
                             dropdownOption.setIndex(d.getOrderIndex());
                             dropdownOption.setName(d.getName());
                             return dropdownOption;
+                        })
+                        .toList()
+        );
+    }
+
+    @Override
+    public ResponseEntity<List<FieldlessResponseLabelsOption>> profileLabelsListListIdFieldFieldIdGet(Integer listId, String fieldId) {
+        FieldsDto accessibleCustomFields = customFieldClient.getAccessibleCustomFields(listId);
+
+        LabelsFieldDto labelsFieldDto = accessibleCustomFields.customField(fieldId);
+        LabelTypeConfig labelTypeConfig = labelsFieldDto.getLabelTypeConfig();
+
+        return resMapper.toResponse(
+                labelTypeConfig
+                        .getLabelOptionDtos()
+                        .stream()
+                        .map(o -> {
+                            var option = new FieldlessResponseLabelsOption();
+                            option.setName(o.getLabel());
+                            option.setId(o.getId());
+                            return option;
                         })
                         .toList()
         );

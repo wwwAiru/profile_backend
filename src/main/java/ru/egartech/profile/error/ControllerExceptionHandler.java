@@ -10,6 +10,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ru.egartech.profile.error.exception.NotFoundException;
 import ru.egartech.sdk.exception.customfield.CustomFieldNotFoundException;
+import ru.egartech.sdk.exception.customfield.CustomFieldValueNotFoundException;
 
 @ControllerAdvice
 @AllArgsConstructor
@@ -46,6 +47,16 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
         );
 
         return new ResponseEntity<>(errorResponse,HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(CustomFieldValueNotFoundException.class)
+    protected ResponseEntity<Object> handleCustomFieldValueNotFoundException(CustomFieldValueNotFoundException exception, WebRequest webRequest) {
+
+        ErrorResponse errorResponse = new ErrorResponse(
+                buildMessage("emptyfield", webRequest, exception.getMessage())
+        );
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
     private String buildMessage(String code, WebRequest request, Object... args) {

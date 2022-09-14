@@ -17,6 +17,8 @@ public class CustomFieldProperties {
     public final String POSITION;
     public final String STACK;
     public final String WHATSAPP;
+    public final String SICKDAY_RELATIONSHIP;
+    public final String VACATION_RELATIONSHIP;
 
     public CustomFieldProperties(
             @Value("${fields.egar_id}")
@@ -50,7 +52,13 @@ public class CustomFieldProperties {
             String STACK,
 
             @Value("${fields.whatsapp}")
-            String whatsapp
+            String whatsapp,
+
+            @Value("${fields.sickday_relationship}")
+            String sickday_relationship,
+
+            @Value("${fields.vacation_relationship}")
+            String vacation_relationship
     ) {
         this.EGAR_ID = EGAR_ID;
         this.AVATAR = AVATAR;
@@ -63,6 +71,8 @@ public class CustomFieldProperties {
         this.POSITION = POSITION;
         this.STACK = STACK;
         this.WHATSAPP = whatsapp;
+        this.SICKDAY_RELATIONSHIP = sickday_relationship;
+        this.VACATION_RELATIONSHIP = vacation_relationship;
     }
 
 }

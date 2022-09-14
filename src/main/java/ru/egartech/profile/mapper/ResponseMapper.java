@@ -5,15 +5,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import ru.egartech.profile.config.CustomFieldProperties;
-import ru.egartech.profile.model.DropdownOption;
-import ru.egartech.profile.model.Experience;
+ import ru.egartech.profile.model.Experience;
 import ru.egartech.profile.model.Profile;
+import ru.egartech.profile.model.ResponseDropdownOption;
 import ru.egartech.sdk.dto.task.TaskDto;
 import ru.egartech.sdk.dto.task.customfield.field.attachment.AttachmentFieldDto;
 import ru.egartech.sdk.dto.task.customfield.field.dropdown.DropdownFieldDto;
 import ru.egartech.sdk.dto.task.customfield.field.label.LabelOptionDto;
 import ru.egartech.sdk.dto.task.customfield.field.label.LabelsFieldDto;
+import ru.egartech.sdk.dto.task.customfield.field.relationship.RelationshipFieldDto;
+import ru.egartech.sdk.dto.task.customfield.field.relationship.RelationshipValueDto;
 import ru.egartech.sdk.dto.task.customfield.field.text.TextFieldDto;
+import ru.egartech.sdk.exception.customfield.CustomFieldValueNotFoundException;
 
 import java.time.Instant;
 import java.time.Period;
@@ -49,26 +52,43 @@ public class ResponseMapper {
         TextFieldDto skypeField = task.customField(properties.SKYPE);
         DropdownFieldDto positionField = task.customField(properties.POSITION);
         LabelsFieldDto stackField = task.customField(properties.STACK);
+        RelationshipFieldDto sickdayField = task.customField(properties.SICKDAY_RELATIONSHIP);
+        RelationshipFieldDto vacationsField = task.customField(properties.VACATION_RELATIONSHIP);
 
+        profile.setListId(task.getList().getId());
         profile.setAvatarUrl(avatarField.getUrl());
         profile.setOnboardDate(onBoardField.getValue());
         profile.setBirthDate(birthDate.getValue());
         profile.setEgarExperience(countExperience(onBoardField));
         profile.setGrade(getGrade(gradeField));
         profile.setEgarId(egarId.getValue());
-        profile.setPositionOptionsId(properties.POSITION);
         profile.setPosition(getPosition(positionField));
         profile.setSkype(skypeField.getValue());
         profile.setTelegram(telegramField.getValue());
         profile.setWorkEmail(workEmailField.getValue());
         profile.setStack(getStack(stackField));
         profile.setWhatsapp(whatsappField.getValue());
+        profile.setSickdays(getLabelsIds(sickdayField, "Больничные"));
+        profile.setVacations(getLabelsIds(vacationsField, "Отпуска"));
 
         return profile;
     }
 
+    private List<String> getLabelsIds(RelationshipFieldDto sickdayField, String fieldName) {
+
+        if (sickdayField.getValue() == null) throw new CustomFieldValueNotFoundException(fieldName);
+
+        return sickdayField
+                .getValue()
+                .stream()
+                .map(RelationshipValueDto::getId)
+                .toList();
+    }
+
     private Experience countExperience(TextFieldDto dateField) {
         Experience experience = new Experience();
+
+        if (dateField.getValue() == null) throw new CustomFieldValueNotFoundException("Дата Выхода");
 
         Instant onBoard = Instant.ofEpochMilli(Long.parseLong(dateField.getValue()));
         Instant now = Instant.ofEpochMilli(System.currentTimeMillis());
@@ -90,17 +110,27 @@ public class ResponseMapper {
     }
 
     private String getGrade(DropdownFieldDto dropdownField) {
+
+        if (dropdownField.getValue() == null) throw new CustomFieldValueNotFoundException("Грейд");
+
         return String.valueOf(dropdownField.getValue().getName());
     }
 
-    private DropdownOption getPosition(DropdownFieldDto dropdownField) {
-        DropdownOption dropdownOption = new DropdownOption();
+    private ResponseDropdownOption getPosition(DropdownFieldDto dropdownField) {
+
+        if (dropdownField.getValue() == null) throw new CustomFieldValueNotFoundException("Специализация основная");
+
+        ResponseDropdownOption dropdownOption = new ResponseDropdownOption();
+        dropdownOption.setFieldId(properties.POSITION);
         dropdownOption.setName(dropdownField.getValue().getName());
         dropdownOption.setIndex(dropdownField.getValue().getOrderIndex());
         return dropdownOption;
     }
 
     private List<String> getStack(LabelsFieldDto labelsField) {
+
+        if (labelsField.getValue() == null) throw new CustomFieldValueNotFoundException("Инструмент тех-ий");
+
         return labelsField.getValue()
                 .stream()
                 .map(LabelOptionDto::getLabel)

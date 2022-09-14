@@ -7,7 +7,34 @@ info:
 
 paths:
 
-  /profile/dropdown/{listId}/{fieldId}:
+  /profile/labels/list/{listId}/field/{fieldId}:
+    get:
+      description: "Получение всех labels опций по Field ID (приходит вместе с профилем)"
+
+      parameters:
+        - name: listId
+          in: path
+          required: true
+          description: "List ID для поиска"
+          schema:
+            type: integer
+
+        - name: fieldId
+          in: path
+          required: true
+          description: "Field ID для поиска"
+          schema:
+            type: string
+
+      responses:
+        200:
+          description: "Все labels опции"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseLabelsOptions"
+
+  /profile/dropdown/list/{listId}/field/{fieldId}:
     get:
       description: "Получение всех dropdown опций по Field ID (приходит вместе с профилем)"
 
@@ -15,7 +42,7 @@ paths:
         - name: listId
           in: path
           required: true
-          description: "Field ID для поиска"
+          description: "List ID для поиска"
           schema:
             type: integer
 
@@ -32,7 +59,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/DropdownOptions"
+                $ref: "#/components/schemas/ResponseDropdownOptions"
 
   /profile/{egarId}:
     get:
@@ -64,12 +91,43 @@ paths:
 components:
   schemas:
 
-    DropdownOptions:
+    ResponseLabelsOptions:
       type: array
       items:
-        $ref: "#/components/schemas/DropdownOption"
+        $ref: "#/components/schemas/FieldlessResponseLabelsOption"
 
-    DropdownOption:
+    FieldlessResponseLabelsOption:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "iOS"
+
+        id:
+          type: string
+          example: a6946333-0f4a-49a2-b62a-8a1f93e9dac7
+
+    ResponseDropdownOptions:
+      type: array
+      items:
+        $ref: "#/components/schemas/FieldlessResponseDropdownOption"
+
+    ResponseDropdownOption:
+      type: object
+      properties:
+        field_id:
+          description: "Не совпадает с ответом по всем опциям"
+          type: string
+          example: "33064c03-b21f-4f93-b74d-b2ef4b081208"
+
+        name:
+          type: string
+          example: "Разработчик"
+        index:
+          type: integer
+          example: 0
+
+    FieldlessResponseDropdownOption:
       type: object
       properties:
         name:
@@ -92,6 +150,7 @@ components:
     Profile:
       type: object
       properties:
+
         list_id:
           type: integer
           example: 180311895
@@ -100,12 +159,20 @@ components:
           type: string
           example: "MPetrova"
 
-        position_options_id:
-          type: string
-          example: "33064c03-b21f-4f93-b74d-b2ef4b081208"
+        vacations:
+          type: array
+          items:
+            type: string
+          example: [ "3wmagnw", "3wlqsqs", "3pqzgpy" ]
+
+        sickdays:
+          type: array
+          items:
+            type: string
+          example: [ "2wmagcr", "2wlqscr", "2pqzgcr" ]
 
         position:
-          $ref: "#/components/schemas/DropdownOption"
+          $ref: "#/components/schemas/ResponseDropdownOption"
 
         grade:
           type: string

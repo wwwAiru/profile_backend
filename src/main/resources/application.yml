@@ -1,10 +1,12 @@
 clickup:
   api:
     tokens:
-  list:
-    devs: "180311895"
-    analytics: "180311904"
-    testers: "180311899"
+      - pk_000000000000000000
+  search-list:
+    ids:
+      - 180311895
+      - 180311904
+      - 180311899
 
 
 fields:
@@ -19,6 +21,9 @@ fields:
   position: "33064c03-b21f-4f93-b74d-b2ef4b081208"
   stack: "948c4322-be0e-473a-9f54-52b1cb6d428b"
   whatsapp: "eb239dbb-41eb-4589-b3b6-2af86edb5895"
+  sickday_relationship: "7e110a3d-31c1-47b0-a269-22daaa527746"
+  vacation_relationship: "856d3fd6-b982-4085-aa67-65d60bf41bb7"
+
 
 lists:
   dev: "180311895"
