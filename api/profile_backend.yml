@@ -67,7 +67,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ResponseDropdownOptions"
 
-  /profile/{egarId}:
+  /profile/id/{egarId}:
 
     get:
       tags:

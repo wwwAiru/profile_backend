@@ -32,7 +32,7 @@ public class ProfileServiceImpl implements ProfileService {
     private final CustomFieldProperties fieldProperties;
 
     @Override
-    public Profile profileEgarIdGet(String egarId) {
+    public Profile profileIdEgarIdGet(String egarId) {
         List<TasksDto> tasks = client.getTasksByCustomFields(
                 CustomFieldRequest
                         .create()
