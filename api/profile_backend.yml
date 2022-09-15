@@ -9,6 +9,9 @@ paths:
 
   /profile/labels/list/{listId}/field/{fieldId}:
     get:
+      tags:
+        - Profile
+
       description: "Получение всех labels опций по Field ID (приходит вместе с профилем)"
 
       parameters:
@@ -36,6 +39,9 @@ paths:
 
   /profile/dropdown/list/{listId}/field/{fieldId}:
     get:
+      tags:
+        - Profile
+
       description: "Получение всех dropdown опций по Field ID (приходит вместе с профилем)"
 
       parameters:
@@ -62,7 +68,11 @@ paths:
                 $ref: "#/components/schemas/ResponseDropdownOptions"
 
   /profile/{egarId}:
+
     get:
+      tags:
+        - Profile
+
       description: "Получение профиля сотрудника по Egar ID (Где взять: [egarId]@egartech.ru)"
 
       parameters:
@@ -91,14 +101,28 @@ paths:
 components:
   schemas:
 
+    Employment:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "МКБ - База знаний"
+        id:
+          type: string
+          example: "2wlqscr"
+
     ResponseLabelsOptions:
       type: array
       items:
-        $ref: "#/components/schemas/FieldlessResponseLabelsOption"
+        $ref: "#/components/schemas/ResponseLabelsOption"
 
-    FieldlessResponseLabelsOption:
+    ResponseLabelsOption:
       type: object
       properties:
+        field_id:
+          type: string
+          example: "33064c03-b21f-4f93-b74d-b2ef4b081208"
+
         name:
           type: string
           example: "iOS"
@@ -110,29 +134,19 @@ components:
     ResponseDropdownOptions:
       type: array
       items:
-        $ref: "#/components/schemas/FieldlessResponseDropdownOption"
+        $ref: "#/components/schemas/ResponseDropdownOption"
 
     ResponseDropdownOption:
       type: object
       properties:
         field_id:
-          description: "Не совпадает с ответом по всем опциям"
           type: string
           example: "33064c03-b21f-4f93-b74d-b2ef4b081208"
 
         name:
           type: string
           example: "Разработчик"
-        index:
-          type: integer
-          example: 0
 
-    FieldlessResponseDropdownOption:
-      type: object
-      properties:
-        name:
-          type: string
-          example: "Разработчик"
         index:
           type: integer
           example: 0
@@ -143,6 +157,7 @@ components:
         years:
           type: integer
           example: 1
+
         months:
           type: integer
           example: 7
@@ -150,7 +165,6 @@ components:
     Profile:
       type: object
       properties:
-
         list_id:
           type: integer
           example: 180311895
@@ -170,6 +184,12 @@ components:
           items:
             type: string
           example: [ "2wmagcr", "2wlqscr", "2pqzgcr" ]
+
+        employments:
+          type: array
+          items:
+            type: string
+          example: [ "4zmagnw", "4mlqsqs"]
 
         position:
           $ref: "#/components/schemas/ResponseDropdownOption"

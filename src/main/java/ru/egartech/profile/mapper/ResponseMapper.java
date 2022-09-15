@@ -1,11 +1,10 @@
 package ru.egartech.profile.mapper;
 
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import ru.egartech.profile.config.CustomFieldProperties;
- import ru.egartech.profile.model.Experience;
+import ru.egartech.profile.model.Experience;
 import ru.egartech.profile.model.Profile;
 import ru.egartech.profile.model.ResponseDropdownOption;
 import ru.egartech.sdk.dto.task.TaskDto;
@@ -54,6 +53,7 @@ public class ResponseMapper {
         LabelsFieldDto stackField = task.customField(properties.STACK);
         RelationshipFieldDto sickdayField = task.customField(properties.SICKDAY_RELATIONSHIP);
         RelationshipFieldDto vacationsField = task.customField(properties.VACATION_RELATIONSHIP);
+        RelationshipFieldDto employmentsField = task.customField(properties.EMPLOYMENTS_RELATIONSHIP);
 
         profile.setListId(task.getList().getId());
         profile.setAvatarUrl(avatarField.getUrl());
@@ -70,6 +70,7 @@ public class ResponseMapper {
         profile.setWhatsapp(whatsappField.getValue());
         profile.setSickdays(getLabelsIds(sickdayField, "Больничные"));
         profile.setVacations(getLabelsIds(vacationsField, "Отпуска"));
+        profile.setEmployments(getLabelsIds(employmentsField, "Занятость"));
 
         return profile;
     }
@@ -94,13 +95,8 @@ public class ResponseMapper {
         Instant now = Instant.ofEpochMilli(System.currentTimeMillis());
 
         Period period = Period.between(
-
-                onBoard.atZone(ZoneId.of("UTC"))
-                        .toLocalDate(),
-
-                now.atZone(ZoneId.of("UTC"))
-                        .toLocalDate()
-
+                onBoard.atZone(ZoneId.of("UTC")).toLocalDate(),
+                now.atZone(ZoneId.of("UTC")).toLocalDate()
         );
 
         experience.setYears(period.getYears());

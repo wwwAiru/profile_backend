@@ -1,78 +1,28 @@
 package ru.egartech.profile.config;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import lombok.Data;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 
-@Component
+@Data
+@Configuration
+//@EnableConfigurationProperties(value = CustomFieldProperties.class)
+@ConfigurationProperties(prefix = "fields")
 public class CustomFieldProperties {
 
-    public final String EGAR_ID;
-    public final String AVATAR;
-    public final String BIRTH_DATE;
-    public final String ONBOARD_DATE;
-    public final String GRADE;
-    public final String WORK_EMAIL;
-    public final String TELEGRAM;
-    public final String SKYPE;
-    public final String POSITION;
-    public final String STACK;
-    public final String WHATSAPP;
-    public final String SICKDAY_RELATIONSHIP;
-    public final String VACATION_RELATIONSHIP;
-
-    public CustomFieldProperties(
-            @Value("${fields.egar_id}")
-            String EGAR_ID,
-
-            @Value("${fields.avatar}")
-            String AVATAR,
-
-            @Value("${fields.birthdate}")
-            String BIRTH_DATE,
-
-            @Value("${fields.onboard_date}")
-            String onboard_date,
-
-            @Value("${fields.grade}")
-            String GRADE,
-
-            @Value("${fields.work_email}")
-            String WORK_EMAIL,
-
-            @Value("${fields.telegram}")
-            String TELEGRAM,
-
-            @Value("${fields.skype}")
-            String SKYPE,
-
-            @Value("${fields.position}")
-            String POSITION,
-
-            @Value("${fields.stack}")
-            String STACK,
-
-            @Value("${fields.whatsapp}")
-            String whatsapp,
-
-            @Value("${fields.sickday_relationship}")
-            String sickday_relationship,
-
-            @Value("${fields.vacation_relationship}")
-            String vacation_relationship
-    ) {
-        this.EGAR_ID = EGAR_ID;
-        this.AVATAR = AVATAR;
-        this.BIRTH_DATE = BIRTH_DATE;
-        this.ONBOARD_DATE = onboard_date;
-        this.GRADE = GRADE;
-        this.WORK_EMAIL = WORK_EMAIL;
-        this.TELEGRAM = TELEGRAM;
-        this.SKYPE = SKYPE;
-        this.POSITION = POSITION;
-        this.STACK = STACK;
-        this.WHATSAPP = whatsapp;
-        this.SICKDAY_RELATIONSHIP = sickday_relationship;
-        this.VACATION_RELATIONSHIP = vacation_relationship;
-    }
+    public String EGAR_ID;
+    public String AVATAR;
+    public String BIRTH_DATE;
+    public String ONBOARD_DATE;
+    public String GRADE;
+    public String WORK_EMAIL;
+    public String TELEGRAM;
+    public String SKYPE;
+    public String POSITION;
+    public String STACK;
+    public String WHATSAPP;
+    public String SICKDAY_RELATIONSHIP;
+    public String VACATION_RELATIONSHIP;
+    public String EMPLOYMENTS_RELATIONSHIP;
 
 }
