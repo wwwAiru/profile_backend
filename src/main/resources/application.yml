@@ -8,9 +8,24 @@ clickup:
       - 180311904
       - 180311899
 
+metrics:
+  counter:
+    urls:
+      - "/profile/id/*"
+      - "/profile/dropdown/list/*/field/*"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, metrics, prometheus
+
 spring:
+  application:
+    name: "Profile Service"
   jackson:
     default-property-inclusion: non_null
+
 
 fields:
   egar_id: "836c9684-0c71-4714-aff2-900b0ded0685"

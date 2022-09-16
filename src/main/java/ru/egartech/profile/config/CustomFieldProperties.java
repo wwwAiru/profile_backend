@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Data
 @Configuration
-//@EnableConfigurationProperties(value = CustomFieldProperties.class)
 @ConfigurationProperties(prefix = "fields")
 public class CustomFieldProperties {
 
