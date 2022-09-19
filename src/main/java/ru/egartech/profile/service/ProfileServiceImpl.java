@@ -37,8 +37,7 @@ public class ProfileServiceImpl implements ProfileService {
                 CustomFieldRequest
                         .create()
                         .setFieldId(fieldProperties.EGAR_ID)
-                        .setValue(egarId)
-        );
+                        .setValue(egarId));
 
         if (tasks.size() > 1) {
             throw new MultipleTasksByEgarIdException(egarId);
