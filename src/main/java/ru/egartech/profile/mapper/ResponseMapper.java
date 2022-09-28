@@ -37,7 +37,6 @@ public class ResponseMapper {
     }
 
     public Profile toProfile(TaskDto task) {
-
         Profile profile = new Profile();
 
         TextFieldDto egarId = task.customField(properties.EGAR_ID);
@@ -54,6 +53,7 @@ public class ResponseMapper {
         RelationshipFieldDto sickdayField = task.customField(properties.SICKDAY_RELATIONSHIP);
         RelationshipFieldDto vacationsField = task.customField(properties.VACATION_RELATIONSHIP);
         RelationshipFieldDto employmentsField = task.customField(properties.EMPLOYMENTS_RELATIONSHIP);
+        RelationshipFieldDto suppliesField = task.customField(properties.SUPPLIES_RELATIONSHIP);
 
         profile.setListId(task.getList().getId());
         profile.setAvatarUrl(avatarField.getUrl());
@@ -71,12 +71,12 @@ public class ResponseMapper {
         profile.setSickdays(getLabelsIds(sickdayField, "Больничные"));
         profile.setVacations(getLabelsIds(vacationsField, "Отпуска"));
         profile.setEmployments(getLabelsIds(employmentsField, "Занятость"));
+        profile.setSupplies(getLabelsIds(suppliesField, "Обеспечение"));
 
         return profile;
     }
 
     private List<String> getLabelsIds(RelationshipFieldDto sickdayField, String fieldName) {
-
         if (sickdayField.getValue() == null) throw new CustomFieldValueNotFoundException(fieldName);
 
         return sickdayField
@@ -124,7 +124,6 @@ public class ResponseMapper {
     }
 
     private List<String> getStack(LabelsFieldDto labelsField) {
-
         if (labelsField.getValue() == null) throw new CustomFieldValueNotFoundException("Инструмент тех-ий");
 
         return labelsField.getValue()

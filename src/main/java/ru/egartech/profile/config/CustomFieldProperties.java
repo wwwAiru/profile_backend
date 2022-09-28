@@ -23,5 +23,6 @@ public class CustomFieldProperties {
     public String SICKDAY_RELATIONSHIP;
     public String VACATION_RELATIONSHIP;
     public String EMPLOYMENTS_RELATIONSHIP;
+    public String SUPPLIES_RELATIONSHIP;
 
 }

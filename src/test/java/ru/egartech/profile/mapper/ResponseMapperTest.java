@@ -34,6 +34,9 @@ class ResponseMapperTest {
     @Autowired
     private CustomFieldProperties properties;
 
+//    Profile(listId=180311895, egarId=username, vacations=[2wmahab], sickdays=[2wmagcr], supplies=[2za7vwm], employments=[2za7vwm], position=ResponseDropdownOption(fieldId=33064c03-b21f-4f93-b74d-b2ef4b081208, name=Разработчик, index=0), grade=Middle (3), stack=[Java / Java 11], avatarUrl=https://t4597045.p.clickup-attachments.com/t4597045/c9372130-1753-4f77-b79d-f7b8c0a3b18a/%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_2022-09-13_165406813.png, onboardDate=1618016400000, birthDate=519177600000, egarExperience=Experience(years=1, months=5), workEmail=username@egartech.ru, telegram=@username, skype=username, whatsapp=https://wa.me/15551234567)
+//    Profile(listId=180311895, egarId=username, vacations=[2wmahab], sickdays=[2wmagcr], supplies=[2za7vwm], employments=[2z4kcma, 2z4g3d7], position=ResponseDropdownOption(fieldId=33064c03-b21f-4f93-b74d-b2ef4b081208, name=Разработчик, index=0), grade=Middle (3), stack=[Java / Java 11], avatarUrl=https://t4597045.p.clickup-attachments.com/t4597045/c9372130-1753-4f77-b79d-f7b8c0a3b18a/%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_2022-09-13_165406813.png, onboardDate=1618016400000, birthDate=519177600000, egarExperience=Experience(years=1, months=5), workEmail=username@egartech.ru, telegram=@username, skype=username, whatsapp=https://wa.me/15551234567)
+
     @Test
     @SneakyThrows
     @DisplayName("Verify that response mapper correctly mapping TaskDto")
@@ -59,6 +62,8 @@ class ResponseMapperTest {
                 .stack(List.of("Java / Java 11"))
                 .vacations(List.of("2wmahab"))
                 .sickdays(List.of("2wmagcr"))
+                .supplies(List.of("2za7vwm"))
+                .employments(List.of("2z4kcma", "2z4g3d7"))
                 .build()
         );
         assertThat(profile).hasNoNullFieldsOrProperties();
@@ -75,13 +80,15 @@ class ResponseMapperTest {
                 .stream()
                 .filter(entry ->
                         except(entry, properties.EGAR_ID) &&
-                        except(entry, properties.GRADE) &&
-                        except(entry, properties.POSITION) &&
-                        except(entry, properties.ONBOARD_DATE) &&
-                        except(entry, properties.STACK) &&
-                        except(entry, properties.SICKDAY_RELATIONSHIP) &&
-                        except(entry, properties.VACATION_RELATIONSHIP) &&
-                        except(entry, properties.EMPLOYMENTS_RELATIONSHIP))
+                                except(entry, properties.GRADE) &&
+                                except(entry, properties.POSITION) &&
+                                except(entry, properties.ONBOARD_DATE) &&
+                                except(entry, properties.STACK) &&
+                                except(entry, properties.SICKDAY_RELATIONSHIP) &&
+                                except(entry, properties.VACATION_RELATIONSHIP) &&
+                                except(entry, properties.EMPLOYMENTS_RELATIONSHIP) &&
+                                except(entry, properties.SUPPLIES_RELATIONSHIP)
+                )
                 .forEach(entry -> entry.getValue().setValue(null));
         task.customField(properties.STACK, LabelsFieldDto.class).setValue(new ArrayList<>());
         task.customField(properties.SICKDAY_RELATIONSHIP, RelationshipFieldDto.class).setValue(new ArrayList<>());

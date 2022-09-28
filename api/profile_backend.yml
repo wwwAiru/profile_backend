@@ -185,11 +185,17 @@ components:
             type: string
           example: [ "2wmagcr", "2wlqscr", "2pqzgcr" ]
 
+        supplies:
+          type: array
+          items:
+            type: string
+          example: [ "2bqzgpy" ]
+
         employments:
           type: array
           items:
             type: string
-          example: [ "4zmagnw", "4mlqsqs"]
+          example: [ "4zmagnw", "4mlqsqs" ]
 
         position:
           $ref: "#/components/schemas/ResponseDropdownOption"
@@ -202,7 +208,7 @@ components:
           type: array
           items:
             type: string
-          example: ["Java", "Spring"]
+          example: [ "Java", "Spring" ]
 
         avatar_url:
           type: string

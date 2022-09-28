@@ -29,21 +29,6 @@
         </dependency>
 
         <dependency>
-            <groupId>ru.egartech</groupId>
-            <artifactId>custom-metrics-spring-boot-starter</artifactId>
-            <version>0.0.1</version>
-        </dependency>
-
-<!--        <dependency>-->
-<!--            <groupId>ru.egartech</groupId>-->
-<!--            <artifactId>sdk</artifactId>-->
-<!--            <version>0.0.1-SNAPSHOT</version>-->
-<!--            <scope>system</scope>-->
-<!--            <type>jar</type>-->
-<!--            <systemPath>${project.basedir}/libs/sdk-0.0.1-SNAPSHOT.jar</systemPath>-->
-<!--        </dependency>-->
-
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
@@ -169,79 +154,79 @@
                 </configuration>
             </plugin>
 
-<!--            <plugin>-->
-<!--                <groupId>org.openapitools</groupId>-->
-<!--                <artifactId>openapi-generator-maven-plugin</artifactId>-->
-<!--                <version>5.1.0</version>-->
-<!--                <executions>-->
+            <!--            <plugin>-->
+            <!--                <groupId>org.openapitools</groupId>-->
+            <!--                <artifactId>openapi-generator-maven-plugin</artifactId>-->
+            <!--                <version>5.1.0</version>-->
+            <!--                <executions>-->
 
-<!--                    <execution>-->
+            <!--                    <execution>-->
 
-<!--                        <goals>-->
-<!--                            <goal>generate</goal>-->
-<!--                        </goals>-->
+            <!--                        <goals>-->
+            <!--                            <goal>generate</goal>-->
+            <!--                        </goals>-->
 
-<!--                        <configuration>-->
+            <!--                        <configuration>-->
 
-<!--                            <inputSpec>-->
-<!--                                ${project.basedir}/api/profile_backend.yml-->
-<!--                            </inputSpec>-->
+            <!--                            <inputSpec>-->
+            <!--                                ${project.basedir}/api/profile_backend.yml-->
+            <!--                            </inputSpec>-->
 
-<!--                            <generatorName>spring</generatorName>-->
+            <!--                            <generatorName>spring</generatorName>-->
 
-<!--                            <apiPackage>ru.egartech.profile.api</apiPackage>-->
-<!--                            <modelPackage>ru.egartech.profile.model</modelPackage>-->
+            <!--                            <apiPackage>ru.egartech.profile.api</apiPackage>-->
+            <!--                            <modelPackage>ru.egartech.profile.model</modelPackage>-->
 
-<!--                            <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>-->
+            <!--                            <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>-->
 
-<!--                            <configOptions>-->
-<!--                                <delegatePattern>true</delegatePattern>-->
-<!--                            </configOptions>-->
+            <!--                            <configOptions>-->
+            <!--                                <delegatePattern>true</delegatePattern>-->
+            <!--                            </configOptions>-->
 
-<!--                        </configuration>-->
-<!--                    </execution>-->
+            <!--                        </configuration>-->
+            <!--                    </execution>-->
 
-<!--                </executions>-->
-<!--            </plugin>-->
+            <!--                </executions>-->
+            <!--            </plugin>-->
 
-<!--            <plugin>-->
-<!--                <groupId>org.openapitools</groupId>-->
-<!--                <artifactId>openapi-generator-maven-plugin</artifactId>-->
-<!--                &lt;!&ndash; RELEASE_VERSION &ndash;&gt;-->
-<!--                <version>6.0.1</version>-->
-<!--                &lt;!&ndash; /RELEASE_VERSION &ndash;&gt;-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <goals>-->
-<!--                            <goal>generate</goal>-->
-<!--                        </goals>-->
-<!--                        <configuration>-->
-<!--                            <inputSpec>${project.basedir}/api/profile_backend.yml</inputSpec>-->
-<!--                            <generatorName>egartech-java-spring</generatorName>-->
-<!--                            <configOptions>-->
-<!--                                <sourceFolder>src</sourceFolder>-->
-<!--                            </configOptions>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
-<!--                </executions>-->
+            <!--            <plugin>-->
+            <!--                <groupId>org.openapitools</groupId>-->
+            <!--                <artifactId>openapi-generator-maven-plugin</artifactId>-->
+            <!--                &lt;!&ndash; RELEASE_VERSION &ndash;&gt;-->
+            <!--                <version>6.0.1</version>-->
+            <!--                &lt;!&ndash; /RELEASE_VERSION &ndash;&gt;-->
+            <!--                <executions>-->
+            <!--                    <execution>-->
+            <!--                        <goals>-->
+            <!--                            <goal>generate</goal>-->
+            <!--                        </goals>-->
+            <!--                        <configuration>-->
+            <!--                            <inputSpec>${project.basedir}/api/profile_backend.yml</inputSpec>-->
+            <!--                            <generatorName>egartech-java-spring</generatorName>-->
+            <!--                            <configOptions>-->
+            <!--                                <sourceFolder>src</sourceFolder>-->
+            <!--                            </configOptions>-->
+            <!--                        </configuration>-->
+            <!--                    </execution>-->
+            <!--                </executions>-->
 
-<!--                <dependencies>-->
-<!--                    <dependency>-->
-<!--                        <groupId>ru.egartech</groupId>-->
-<!--                        <artifactId>egartech-java-spring-openapi-generator</artifactId>-->
-<!--                        <version>0.0.1-SNAPSHOT</version>-->
-<!--                    </dependency>-->
-<!--                </dependencies>-->
-<!--            </plugin>-->
+            <!--                <dependencies>-->
+            <!--                    <dependency>-->
+            <!--                        <groupId>ru.egartech</groupId>-->
+            <!--                        <artifactId>egartech-java-spring-openapi-generator</artifactId>-->
+            <!--                        <version>0.0.1-SNAPSHOT</version>-->
+            <!--                    </dependency>-->
+            <!--                </dependencies>-->
+            <!--            </plugin>-->
 
         </plugins>
     </build>
 
-<!--    <repositories>-->
-<!--        <repository>-->
-<!--            <id>gitlab-maven</id>-->
-<!--            <url>https://gitlab.com/egarcc/portal/clickup_sdk/-/tree/develop</url>-->
-<!--        </repository>-->
-<!--    </repositories>-->
+    <!--    <repositories>-->
+    <!--        <repository>-->
+    <!--            <id>gitlab-maven</id>-->
+    <!--            <url>https://gitlab.com/egarcc/portal/clickup_sdk/-/tree/develop</url>-->
+    <!--        </repository>-->
+    <!--    </repositories>-->
 
 </project>
