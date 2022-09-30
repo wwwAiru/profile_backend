@@ -151,6 +151,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
                 <configuration>
+                    <finalName>${project.artifactId}</finalName>
                     <mainClass>ru.egartech.profile.ProfileBackendApplication</mainClass>
 
                     <includeSystemScope>true</includeSystemScope>
