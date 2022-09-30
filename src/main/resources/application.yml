@@ -1,34 +1,7 @@
-clickup:
-  api:
-    tokens:
-      - pk_000000000000000000
-  search-list:
-    ids:
-      - 180311895
-      - 180311904
-      - 180311899
-
 spring:
   application:
-    name: "Profile Service"
-  jackson:
-    default-property-inclusion: non_null
-
-fields:
-  egar_id: "836c9684-0c71-4714-aff2-900b0ded0685"
-  avatar: "d01ad323-e69b-4413-9d57-256613e62ee0"
-  onboard_date: "ea8cc2d2-4255-4cf8-b207-0b96ff6e4987"
-  birthdate: "15b5edd5-7b26-4a2b-9def-e0c211731265"
-  grade: "e7e89fd8-c5a6-4ae9-84ff-00bf3292033e"
-  work_email: "5c6128d2-1c1f-420d-890a-e85afd61b123"
-  telegram: "7dcb1177-6071-40c0-83dc-5c1b45cc7a3c"
-  skype: "6f023e63-c487-40cb-8eb3-bb582557e4a0"
-  position: "33064c03-b21f-4f93-b74d-b2ef4b081208"
-  location: "bf015492-98e8-42f9-91a4-c802c988283a"
-  stack: "948c4322-be0e-473a-9f54-52b1cb6d428b"
-  whatsapp: "eb239dbb-41eb-4589-b3b6-2af86edb5895"
-  phone: "159a46bb-b8f7-41c8-a226-2a523e9b7403"
-  sickday_relationship: "7e110a3d-31c1-47b0-a269-22daaa527746"
-  vacation_relationship: "856d3fd6-b982-4085-aa67-65d60bf41bb7"
-  employments_relationship: "b2c2a7b0-6377-4177-917d-846d49e5a013"
-  supplies_relationship: "a0fc2f68-fcee-4c80-9d3d-c165e7e9e658"
+    name: profile_backend
+  profiles:
+    active: dev
+  config:
+    import: configserver:http://176.113.82.235:8888
