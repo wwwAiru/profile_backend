@@ -30,36 +30,33 @@ public class ProfileServiceImpl implements ProfileService {
 
     private final ListTaskClient client;
     private final CustomFieldClient customFieldClient;
-    private final ResponseMapper resMapper;
+    private final ResponseMapper mapper;
     private final CustomFieldProperties fieldProperties;
     private final MessageSource messageSource;
 
     @Override
-    public Profile profileIdEgarIdGet(String egarId) {
-        List<TasksDto> tasks = client.getTasksByCustomFields(
-                false,
+    public Profile getProfileByEgarId(String egarId) {
+        List<TasksDto> tasks = client.getTasksByCustomFields(false,
                 CustomFieldRequest
                         .builder()
                         .fieldId(fieldProperties.EGAR_ID)
                         .value(egarId)
                         .build());
-        if (tasks.size() > 1) {
-            throw new MultipleTasksByEgarIdException(egarId);
-        }
-        Supplier<NullPointerException> exceptionSupplier = () ->
-                new NullPointerException(messageSource.getMessage(
+
+        if (tasks.size() > 1) throw new MultipleTasksByEgarIdException(egarId);
+
+        Supplier<NullPointerException> exceptionSupplier =
+                () -> new NullPointerException(messageSource.getMessage(
                         "notasksinquery",
                         null,
                         Locale.getDefault()));
         TaskDto exactTask = tasks.stream().findFirst().orElseThrow(exceptionSupplier).getFirstTask();
-        return resMapper.toProfile(exactTask);
+        return mapper.toProfile(exactTask);
     }
 
     @Override
-    public List<ResponseDropdownOption> profileDropdownListListIdFieldFieldIdGet(
-            Integer listId,
-            String fieldId
-    ) {
+    public List<ResponseDropdownOption> getDropdownOptions(Integer listId,
+                                                           String fieldId) {
         FieldsDto accessibleCustomFields = customFieldClient.getAccessibleCustomFields(listId);
         DropdownFieldDto dropdowns = accessibleCustomFields.customField(fieldId);
         DropdownTypeConfig dropdownTypeConfig = dropdowns.getDropdownTypeConfig();
@@ -75,7 +72,8 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public List<ResponseLabelsOption> profileLabelsListListIdFieldFieldIdGet(Integer listId, String fieldId) {
+    public List<ResponseLabelsOption> getLabelsOptions(Integer listId,
+                                                       String fieldId) {
         FieldsDto accessibleCustomFields = customFieldClient.getAccessibleCustomFields(listId);
         LabelsFieldDto labelsFieldDto = accessibleCustomFields.customField(fieldId);
         LabelTypeConfig labelTypeConfig = labelsFieldDto.getLabelTypeConfig();
@@ -86,8 +84,7 @@ public class ProfileServiceImpl implements ProfileService {
                         .builder()
                         .name(o.getLabel())
                         .id(o.getId())
-                        .build()
-                )
+                        .build())
                 .toList();
     }
 }

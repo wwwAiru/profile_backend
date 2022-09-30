@@ -1,7 +1,6 @@
 package ru.egartech.profile.mapper;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import ru.egartech.profile.config.CustomFieldProperties;
 import ru.egartech.profile.model.Experience;
@@ -21,7 +20,6 @@ import java.time.Instant;
 import java.time.Period;
 import java.time.ZoneId;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -29,12 +27,6 @@ import java.util.stream.Collectors;
 public class ResponseMapper {
 
     private final CustomFieldProperties properties;
-
-    public <T> ResponseEntity<T> toResponse(T t) {
-        return ResponseEntity.of(
-                Optional.of(t)
-        );
-    }
 
     public Profile toProfile(TaskDto task) {
         Profile profile = new Profile();
@@ -45,10 +37,12 @@ public class ResponseMapper {
         TextFieldDto birthDate = task.customField(properties.BIRTH_DATE);
         DropdownFieldDto gradeField = task.customField(properties.GRADE);
         TextFieldDto whatsappField = task.customField(properties.WHATSAPP);
+        TextFieldDto phoneField = task.customField(properties.PHONE);
         TextFieldDto workEmailField = task.customField(properties.WORK_EMAIL);
         TextFieldDto telegramField = task.customField(properties.TELEGRAM);
         TextFieldDto skypeField = task.customField(properties.SKYPE);
         DropdownFieldDto positionField = task.customField(properties.POSITION);
+        DropdownFieldDto locationField = task.customField(properties.LOCATION);
         LabelsFieldDto stackField = task.customField(properties.STACK);
         RelationshipFieldDto sickdayField = task.customField(properties.SICKDAY_RELATIONSHIP);
         RelationshipFieldDto vacationsField = task.customField(properties.VACATION_RELATIONSHIP);
@@ -63,11 +57,13 @@ public class ResponseMapper {
         profile.setGrade(getGrade(gradeField));
         profile.setEgarId(egarId.getValue());
         profile.setPosition(getPosition(positionField));
+        profile.setLocation(getLocation(locationField));
         profile.setSkype(skypeField.getValue());
         profile.setTelegram(telegramField.getValue());
         profile.setWorkEmail(workEmailField.getValue());
         profile.setStack(getStack(stackField));
         profile.setWhatsapp(whatsappField.getValue());
+        profile.setPhone(phoneField.getValue());
         profile.setSickdays(getLabelsIds(sickdayField, "Больничные"));
         profile.setVacations(getLabelsIds(vacationsField, "Отпуска"));
         profile.setEmployments(getLabelsIds(employmentsField, "Занятость"));
@@ -93,31 +89,34 @@ public class ResponseMapper {
 
         Instant onBoard = Instant.ofEpochMilli(Long.parseLong(dateField.getValue()));
         Instant now = Instant.ofEpochMilli(System.currentTimeMillis());
-
         Period period = Period.between(
                 onBoard.atZone(ZoneId.of("UTC")).toLocalDate(),
-                now.atZone(ZoneId.of("UTC")).toLocalDate()
-        );
-
+                now.atZone(ZoneId.of("UTC")).toLocalDate());
         experience.setYears(period.getYears());
         experience.setMonths(period.getMonths());
-
         return experience;
     }
 
     private String getGrade(DropdownFieldDto dropdownField) {
-
         if (dropdownField.getValue() == null) throw new CustomFieldValueNotFoundException("Грейд");
-
         return String.valueOf(dropdownField.getValue().getName());
     }
 
     private ResponseDropdownOption getPosition(DropdownFieldDto dropdownField) {
-
         if (dropdownField.getValue() == null) throw new CustomFieldValueNotFoundException("Специализация основная");
 
         ResponseDropdownOption dropdownOption = new ResponseDropdownOption();
         dropdownOption.setFieldId(properties.POSITION);
+        dropdownOption.setName(dropdownField.getValue().getName());
+        dropdownOption.setIndex(dropdownField.getValue().getOrderIndex());
+        return dropdownOption;
+    }
+
+    private ResponseDropdownOption getLocation(DropdownFieldDto dropdownField) {
+        if (dropdownField.getValue() == null) throw new CustomFieldValueNotFoundException("Локация");
+
+        ResponseDropdownOption dropdownOption = new ResponseDropdownOption();
+        dropdownOption.setFieldId(properties.LOCATION);
         dropdownOption.setName(dropdownField.getValue().getName());
         dropdownOption.setIndex(dropdownField.getValue().getOrderIndex());
         return dropdownOption;

@@ -14,6 +14,8 @@ paths:
 
       description: "Получение всех labels опций по Field ID (приходит вместе с профилем)"
 
+      operationId: getLabelsOptions
+
       parameters:
         - name: listId
           in: path
@@ -39,6 +41,7 @@ paths:
 
   /profile/dropdown/list/{listId}/field/{fieldId}:
     get:
+      operationId: getDropdownOptions
       tags:
         - Profile
 
@@ -73,6 +76,8 @@ paths:
       tags:
         - Profile
 
+      operationId: getProfileByEgarId
+
       description: "Получение профиля сотрудника по Egar ID (Где взять: [egarId]@egartech.ru)"
 
       parameters:
@@ -100,6 +105,31 @@ paths:
 
 components:
   schemas:
+    PositionExample:
+      type: object
+      properties:
+        field_id:
+          type: string
+          example: "33064c03-b21f-4f93-b74d-b2ef4b081208"
+        name:
+          type: string
+          example: "Разработчик"
+        index:
+          type: integer
+          example: 0
+
+    LocationExample:
+      type: object
+      properties:
+        field_id:
+          type: string
+          example: "33064c03-b21f-4f93-b74d-b2ef4b081208"
+        name:
+          type: string
+          example: "Пенза"
+        index:
+          type: integer
+          example: 7
 
     Employment:
       type: object
@@ -145,7 +175,7 @@ components:
 
         name:
           type: string
-          example: "Разработчик"
+          example: "Выпадающий элемент"
 
         index:
           type: integer
@@ -173,6 +203,57 @@ components:
           type: string
           example: "MPetrova"
 
+        phone:
+          type: string
+          example: "+79999999999"
+
+        whatsapp:
+          type: string
+          example: "https://wa.me/14134567890"
+
+        skype:
+          type: string
+          example: "pupkin@egar.com"
+
+        telegram:
+          type: string
+          example: "@petr"
+
+        work_email:
+          type: string
+          example: "pupkin@egar.com"
+
+        birth_date:
+          type: string
+          example: "1362032329524"
+
+        onboard_date:
+          type: string
+          example: "1662032329524"
+
+        avatar_url:
+          type: string
+          example: "https://t4597045.p.clickup-attachments.com/t4597045/e19a8d64-ba5b-47ce-84e6-dde62092d5f1_large.png"
+
+        grade:
+          type: string
+          example: "Middle"
+
+        stack:
+          type: array
+          items:
+            type: string
+          example: [ "Java", "Spring" ]
+
+        egar_experience:
+          $ref: "#/components/schemas/Experience"
+
+        location:
+          $ref: "#/components/schemas/ResponseDropdownOption"
+
+        position:
+          $ref: "#/components/schemas/ResponseDropdownOption"
+
         vacations:
           type: array
           items:
@@ -196,50 +277,3 @@ components:
           items:
             type: string
           example: [ "4zmagnw", "4mlqsqs" ]
-
-        position:
-          $ref: "#/components/schemas/ResponseDropdownOption"
-
-        grade:
-          type: string
-          example: "Middle"
-
-        stack:
-          type: array
-          items:
-            type: string
-          example: [ "Java", "Spring" ]
-
-        avatar_url:
-          type: string
-          example: "https://t4597045.p.clickup-attachments.com/t4597045/e19a8d64-ba5b-47ce-84e6-dde62092d5f1_large.png"
-
-        onboard_date:
-          type: string
-          example: "1662032329524"
-
-        birth_date:
-          type: string
-          example: "1362032329524"
-
-        egar_experience:
-          $ref: "#/components/schemas/Experience"
-
-        work_email:
-          type: string
-          example: "pupkin@egar.com"
-
-        telegram:
-          type: string
-          example: "@petr"
-
-        skype:
-          type: string
-          example: "pupkin@egar.com"
-
-        whatsapp:
-          type: string
-          example: "https://wa.me/14134567890"
-
-
-
