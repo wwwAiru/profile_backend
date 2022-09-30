@@ -23,6 +23,7 @@ import java.util.Map;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
+@org.springframework.context.annotation.Profile("test")
 @DisplayName("Проверка ResponseMapper")
 class ResponseMapperTest {
 
