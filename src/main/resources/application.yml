@@ -14,7 +14,6 @@ spring:
   jackson:
     default-property-inclusion: non_null
 
-
 fields:
   egar_id: "836c9684-0c71-4714-aff2-900b0ded0685"
   avatar: "d01ad323-e69b-4413-9d57-256613e62ee0"

@@ -22,6 +22,8 @@ import java.time.ZoneId;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.isNull;
+
 @Component
 @RequiredArgsConstructor
 public class ResponseMapper {
@@ -29,8 +31,6 @@ public class ResponseMapper {
     private final CustomFieldProperties properties;
 
     public Profile toProfile(TaskDto task) {
-        Profile profile = new Profile();
-
         TextFieldDto egarId = task.customField(properties.EGAR_ID);
         AttachmentFieldDto avatarField = task.customField(properties.AVATAR);
         TextFieldDto onBoardField = task.customField(properties.ONBOARD_DATE);
@@ -49,6 +49,7 @@ public class ResponseMapper {
         RelationshipFieldDto employmentsField = task.customField(properties.EMPLOYMENTS_RELATIONSHIP);
         RelationshipFieldDto suppliesField = task.customField(properties.SUPPLIES_RELATIONSHIP);
 
+        Profile profile = new Profile();
         profile.setListId(task.getList().getId());
         profile.setAvatarUrl(avatarField.getUrl());
         profile.setOnboardDate(onBoardField.getValue());
@@ -56,24 +57,23 @@ public class ResponseMapper {
         profile.setEgarExperience(countExperience(onBoardField));
         profile.setGrade(getGrade(gradeField));
         profile.setEgarId(egarId.getValue());
-        profile.setPosition(getPosition(positionField));
-        profile.setLocation(getLocation(locationField));
+        profile.setPosition(getDropdownOption(positionField));
+        profile.setLocation(getDropdownOption(locationField));
         profile.setSkype(skypeField.getValue());
         profile.setTelegram(telegramField.getValue());
         profile.setWorkEmail(workEmailField.getValue());
         profile.setStack(getStack(stackField));
         profile.setWhatsapp(whatsappField.getValue());
         profile.setPhone(phoneField.getValue());
-        profile.setSickdays(getLabelsIds(sickdayField, "Больничные"));
-        profile.setVacations(getLabelsIds(vacationsField, "Отпуска"));
-        profile.setEmployments(getLabelsIds(employmentsField, "Занятость"));
-        profile.setSupplies(getLabelsIds(suppliesField, "Обеспечение"));
-
+        profile.setSickdays(getLabelsIds(sickdayField, sickdayField.getName()));
+        profile.setVacations(getLabelsIds(vacationsField, vacationsField.getName()));
+        profile.setEmployments(getLabelsIds(employmentsField, employmentsField.getName()));
+        profile.setSupplies(getLabelsIds(suppliesField, suppliesField.getName()));
         return profile;
     }
 
     private List<String> getLabelsIds(RelationshipFieldDto sickdayField, String fieldName) {
-        if (sickdayField.getValue() == null) throw new CustomFieldValueNotFoundException(fieldName);
+        if (isNull(sickdayField.getValue())) throw new CustomFieldValueNotFoundException(fieldName);
 
         return sickdayField
                 .getValue()
@@ -83,10 +83,9 @@ public class ResponseMapper {
     }
 
     private Experience countExperience(TextFieldDto dateField) {
+        if (isNull(dateField.getValue())) throw new CustomFieldValueNotFoundException(dateField.getName());
+
         Experience experience = new Experience();
-
-        if (dateField.getValue() == null) throw new CustomFieldValueNotFoundException("Дата Выхода");
-
         Instant onBoard = Instant.ofEpochMilli(Long.parseLong(dateField.getValue()));
         Instant now = Instant.ofEpochMilli(System.currentTimeMillis());
         Period period = Period.between(
@@ -98,32 +97,22 @@ public class ResponseMapper {
     }
 
     private String getGrade(DropdownFieldDto dropdownField) {
-        if (dropdownField.getValue() == null) throw new CustomFieldValueNotFoundException("Грейд");
+        if (isNull(dropdownField.getValue())) throw new CustomFieldValueNotFoundException(dropdownField.getName());
         return String.valueOf(dropdownField.getValue().getName());
     }
 
-    private ResponseDropdownOption getPosition(DropdownFieldDto dropdownField) {
-        if (dropdownField.getValue() == null) throw new CustomFieldValueNotFoundException("Специализация основная");
+    private ResponseDropdownOption getDropdownOption(DropdownFieldDto dropdownField) {
+        if (isNull(dropdownField.getValue())) throw new CustomFieldValueNotFoundException(dropdownField.getName());
 
         ResponseDropdownOption dropdownOption = new ResponseDropdownOption();
-        dropdownOption.setFieldId(properties.POSITION);
-        dropdownOption.setName(dropdownField.getValue().getName());
-        dropdownOption.setIndex(dropdownField.getValue().getOrderIndex());
-        return dropdownOption;
-    }
-
-    private ResponseDropdownOption getLocation(DropdownFieldDto dropdownField) {
-        if (dropdownField.getValue() == null) throw new CustomFieldValueNotFoundException("Локация");
-
-        ResponseDropdownOption dropdownOption = new ResponseDropdownOption();
-        dropdownOption.setFieldId(properties.LOCATION);
+        dropdownOption.setFieldId(dropdownField.getId());
         dropdownOption.setName(dropdownField.getValue().getName());
         dropdownOption.setIndex(dropdownField.getValue().getOrderIndex());
         return dropdownOption;
     }
 
     private List<String> getStack(LabelsFieldDto labelsField) {
-        if (labelsField.getValue() == null) throw new CustomFieldValueNotFoundException("Инструмент тех-ий");
+        if (isNull(labelsField.getValue())) throw new CustomFieldValueNotFoundException(labelsField.getName());
 
         return labelsField.getValue()
                 .stream()
