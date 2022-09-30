@@ -128,7 +128,7 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>${project.basedir}/src/main/resources/openapi.yml</inputSpec>
+                            <inputSpec>${project.basedir}/src/main/resources/swagger/openapi.yml</inputSpec>
                             <generatorName>spring-codegen</generatorName>
                             <apiPackage>ru.egartech.profile</apiPackage>
                             <modelPackage>ru.egartech.profile.model</modelPackage>

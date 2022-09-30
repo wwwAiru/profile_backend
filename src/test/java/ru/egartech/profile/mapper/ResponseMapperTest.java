@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.ResourceUtils;
 import ru.egartech.profile.config.CustomFieldProperties;
 import ru.egartech.profile.model.Experience;
@@ -23,7 +24,7 @@ import java.util.Map;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
-@org.springframework.context.annotation.Profile("test")
+@ActiveProfiles("test")
 @DisplayName("Проверка ResponseMapper")
 class ResponseMapperTest {
 
