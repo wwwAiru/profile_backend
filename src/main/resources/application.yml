@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: profile_backend
+  profiles:
+    active: dev
+  config:
+    import: configserver:http://176.113.82.235:8888

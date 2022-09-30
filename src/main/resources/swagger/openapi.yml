@@ -1,0 +1,279 @@
+openapi: "3.0.3"
+
+info:
+  title: "profile_backend"
+  description: "profile_backend"
+  version: "1.0.0"
+
+paths:
+
+  /profile/labels/list/{listId}/field/{fieldId}:
+    get:
+      tags:
+        - Profile
+
+      description: "Получение всех labels опций по Field ID (приходит вместе с профилем)"
+
+      operationId: getLabelsOptions
+
+      parameters:
+        - name: listId
+          in: path
+          required: true
+          description: "List ID для поиска"
+          schema:
+            type: integer
+
+        - name: fieldId
+          in: path
+          required: true
+          description: "Field ID для поиска"
+          schema:
+            type: string
+
+      responses:
+        200:
+          description: "Все labels опции"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseLabelsOptions"
+
+  /profile/dropdown/list/{listId}/field/{fieldId}:
+    get:
+      operationId: getDropdownOptions
+      tags:
+        - Profile
+
+      description: "Получение всех dropdown опций по Field ID (приходит вместе с профилем)"
+
+      parameters:
+        - name: listId
+          in: path
+          required: true
+          description: "List ID для поиска"
+          schema:
+            type: integer
+
+        - name: fieldId
+          in: path
+          required: true
+          description: "Field ID для поиска"
+          schema:
+            type: string
+
+      responses:
+        200:
+          description: "Все dropdown опции"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseDropdownOptions"
+
+  /profile/id/{egarId}:
+
+    get:
+      tags:
+        - Profile
+
+      operationId: getProfileByEgarId
+
+      description: "Получение профиля сотрудника по Egar ID (Где взять: [egarId]@egartech.ru)"
+
+      parameters:
+        - name: egarId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: "Egar ID сотрудника"
+
+      responses:
+
+        200:
+          description: "Профиль сотрудника без Sickday"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Profile"
+
+        400:
+          description: "Неверная карточка сотрудника"
+
+        404:
+          description: "Сотрудник не найден"
+
+components:
+  schemas:
+    PositionExample:
+      type: object
+      properties:
+        field_id:
+          type: string
+          example: "33064c03-b21f-4f93-b74d-b2ef4b081208"
+        name:
+          type: string
+          example: "Разработчик"
+        index:
+          type: integer
+          example: 0
+
+    LocationExample:
+      type: object
+      properties:
+        field_id:
+          type: string
+          example: "33064c03-b21f-4f93-b74d-b2ef4b081208"
+        name:
+          type: string
+          example: "Пенза"
+        index:
+          type: integer
+          example: 7
+
+    Employment:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "МКБ - База знаний"
+        id:
+          type: string
+          example: "2wlqscr"
+
+    ResponseLabelsOptions:
+      type: array
+      items:
+        $ref: "#/components/schemas/ResponseLabelsOption"
+
+    ResponseLabelsOption:
+      type: object
+      properties:
+        field_id:
+          type: string
+          example: "33064c03-b21f-4f93-b74d-b2ef4b081208"
+
+        name:
+          type: string
+          example: "iOS"
+
+        id:
+          type: string
+          example: a6946333-0f4a-49a2-b62a-8a1f93e9dac7
+
+    ResponseDropdownOptions:
+      type: array
+      items:
+        $ref: "#/components/schemas/ResponseDropdownOption"
+
+    ResponseDropdownOption:
+      type: object
+      properties:
+        field_id:
+          type: string
+          example: "33064c03-b21f-4f93-b74d-b2ef4b081208"
+
+        name:
+          type: string
+          example: "Выпадающий элемент"
+
+        index:
+          type: integer
+          example: 0
+
+    Experience:
+      type: object
+      properties:
+        years:
+          type: integer
+          example: 1
+
+        months:
+          type: integer
+          example: 7
+
+    Profile:
+      type: object
+      properties:
+        list_id:
+          type: integer
+          example: 180311895
+
+        egar_id:
+          type: string
+          example: "MPetrova"
+
+        phone:
+          type: string
+          example: "+79999999999"
+
+        whatsapp:
+          type: string
+          example: "https://wa.me/14134567890"
+
+        skype:
+          type: string
+          example: "pupkin@egar.com"
+
+        telegram:
+          type: string
+          example: "@petr"
+
+        work_email:
+          type: string
+          example: "pupkin@egar.com"
+
+        birth_date:
+          type: string
+          example: "1362032329524"
+
+        onboard_date:
+          type: string
+          example: "1662032329524"
+
+        avatar_url:
+          type: string
+          example: "https://t4597045.p.clickup-attachments.com/t4597045/e19a8d64-ba5b-47ce-84e6-dde62092d5f1_large.png"
+
+        grade:
+          type: string
+          example: "Middle"
+
+        stack:
+          type: array
+          items:
+            type: string
+          example: [ "Java", "Spring" ]
+
+        egar_experience:
+          $ref: "#/components/schemas/Experience"
+
+        location:
+          $ref: "#/components/schemas/ResponseDropdownOption"
+
+        position:
+          $ref: "#/components/schemas/ResponseDropdownOption"
+
+        vacations:
+          type: array
+          items:
+            type: string
+          example: [ "3wmagnw", "3wlqsqs", "3pqzgpy" ]
+
+        sickdays:
+          type: array
+          items:
+            type: string
+          example: [ "2wmagcr", "2wlqscr", "2pqzgcr" ]
+
+        supplies:
+          type: array
+          items:
+            type: string
+          example: [ "2bqzgpy" ]
+
+        employments:
+          type: array
+          items:
+            type: string
+          example: [ "4zmagnw", "4mlqsqs" ]
