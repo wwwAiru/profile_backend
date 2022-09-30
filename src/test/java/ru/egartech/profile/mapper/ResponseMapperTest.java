@@ -79,21 +79,21 @@ class ResponseMapperTest {
         task.getCustomFields()
                 .entrySet()
                 .stream()
-                .filter(entry -> except(entry, properties.EGAR_ID) &&
-                        except(entry, properties.GRADE) &&
-                        except(entry, properties.POSITION) &&
-                        except(entry, properties.ONBOARD_DATE) &&
-                        except(entry, properties.STACK) &&
-                        except(entry, properties.SICKDAY_RELATIONSHIP) &&
-                        except(entry, properties.VACATION_RELATIONSHIP) &&
-                        except(entry, properties.EMPLOYMENTS_RELATIONSHIP) &&
-                        except(entry, properties.SUPPLIES_RELATIONSHIP) &&
-                        except(entry, properties.LOCATION))
+                .filter(entry -> except(entry, properties.egarId) &&
+                        except(entry, properties.grade) &&
+                        except(entry, properties.position) &&
+                        except(entry, properties.onboard_date) &&
+                        except(entry, properties.stack) &&
+                        except(entry, properties.sickdayRelationship) &&
+                        except(entry, properties.vacationRelationship) &&
+                        except(entry, properties.employmentsRelationship) &&
+                        except(entry, properties.suppliesRelationship) &&
+                        except(entry, properties.location))
                 .forEach(entry -> entry.getValue().setValue(null));
-        task.customField(properties.STACK, LabelsFieldDto.class).setValue(new ArrayList<>());
-        task.customField(properties.SICKDAY_RELATIONSHIP, RelationshipFieldDto.class).setValue(new ArrayList<>());
-        task.customField(properties.VACATION_RELATIONSHIP, RelationshipFieldDto.class).setValue(new ArrayList<>());
-        task.customField(properties.EMPLOYMENTS_RELATIONSHIP, RelationshipFieldDto.class).setValue(new ArrayList<>());
+        task.customField(properties.stack, LabelsFieldDto.class).setValue(new ArrayList<>());
+        task.customField(properties.sickdayRelationship, RelationshipFieldDto.class).setValue(new ArrayList<>());
+        task.customField(properties.vacationRelationship, RelationshipFieldDto.class).setValue(new ArrayList<>());
+        task.customField(properties.employmentsRelationship, RelationshipFieldDto.class).setValue(new ArrayList<>());
         responseMapper.toProfile(task);
     }
 

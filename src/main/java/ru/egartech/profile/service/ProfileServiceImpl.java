@@ -31,7 +31,7 @@ public class ProfileServiceImpl implements ProfileService {
     private final ListTaskClient client;
     private final CustomFieldClient customFieldClient;
     private final ResponseMapper mapper;
-    private final CustomFieldProperties fieldProperties;
+    private final CustomFieldProperties properties;
     private final MessageSource messageSource;
 
     @Override
@@ -39,7 +39,7 @@ public class ProfileServiceImpl implements ProfileService {
         List<TasksDto> tasks = client.getTasksByCustomFields(false,
                 CustomFieldRequest
                         .builder()
-                        .fieldId(fieldProperties.EGAR_ID)
+                        .fieldId(properties.egarId)
                         .value(egarId)
                         .build());
 

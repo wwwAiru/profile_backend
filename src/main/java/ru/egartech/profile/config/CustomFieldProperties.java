@@ -8,21 +8,21 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "fields")
 public class CustomFieldProperties {
-    public String EGAR_ID;
-    public String AVATAR;
-    public String BIRTH_DATE;
-    public String ONBOARD_DATE;
-    public String GRADE;
-    public String WORK_EMAIL;
-    public String TELEGRAM;
-    public String SKYPE;
-    public String POSITION;
-    public String LOCATION;
-    public String STACK;
-    public String WHATSAPP;
-    public String PHONE;
-    public String SICKDAY_RELATIONSHIP;
-    public String VACATION_RELATIONSHIP;
-    public String EMPLOYMENTS_RELATIONSHIP;
-    public String SUPPLIES_RELATIONSHIP;
+    public String egarId;
+    public String avatar;
+    public String birth_date;
+    public String onboard_date;
+    public String grade;
+    public String workEmail;
+    public String telegram;
+    public String skype;
+    public String position;
+    public String location;
+    public String stack;
+    public String whatsapp;
+    public String phone;
+    public String sickdayRelationship;
+    public String vacationRelationship;
+    public String employmentsRelationship;
+    public String suppliesRelationship;
 }
