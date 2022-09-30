@@ -73,8 +73,9 @@ public class ResponseMapper {
     }
 
     private List<String> getLabelsIds(RelationshipFieldDto sickdayField, String fieldName) {
-        if (isNull(sickdayField.getValue())) throw new CustomFieldValueNotFoundException(fieldName);
-
+        if (isNull(sickdayField.getValue())) {
+            throw new CustomFieldValueNotFoundException(fieldName);
+        }
         return sickdayField
                 .getValue()
                 .stream()
@@ -83,8 +84,9 @@ public class ResponseMapper {
     }
 
     private Experience countExperience(TextFieldDto dateField) {
-        if (isNull(dateField.getValue())) throw new CustomFieldValueNotFoundException(dateField.getName());
-
+        if (isNull(dateField.getValue())) {
+            throw new CustomFieldValueNotFoundException(dateField.getName());
+        }
         Experience experience = new Experience();
         Instant onBoard = Instant.ofEpochMilli(Long.parseLong(dateField.getValue()));
         Instant now = Instant.ofEpochMilli(System.currentTimeMillis());
@@ -97,13 +99,16 @@ public class ResponseMapper {
     }
 
     private String getGrade(DropdownFieldDto dropdownField) {
-        if (isNull(dropdownField.getValue())) throw new CustomFieldValueNotFoundException(dropdownField.getName());
+        if (isNull(dropdownField.getValue())) {
+            throw new CustomFieldValueNotFoundException(dropdownField.getName());
+        }
         return String.valueOf(dropdownField.getValue().getName());
     }
 
     private ResponseDropdownOption getDropdownOption(DropdownFieldDto dropdownField) {
-        if (isNull(dropdownField.getValue())) throw new CustomFieldValueNotFoundException(dropdownField.getName());
-
+        if (isNull(dropdownField.getValue())) {
+            throw new CustomFieldValueNotFoundException(dropdownField.getName());
+        }
         ResponseDropdownOption dropdownOption = new ResponseDropdownOption();
         dropdownOption.setFieldId(dropdownField.getId());
         dropdownOption.setName(dropdownField.getValue().getName());
@@ -112,8 +117,9 @@ public class ResponseMapper {
     }
 
     private List<String> getStack(LabelsFieldDto labelsField) {
-        if (isNull(labelsField.getValue())) throw new CustomFieldValueNotFoundException(labelsField.getName());
-
+        if (isNull(labelsField.getValue())) {
+            throw new CustomFieldValueNotFoundException(labelsField.getName());
+        }
         return labelsField.getValue()
                 .stream()
                 .map(LabelOptionDto::getLabel)

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
-import ru.egartech.profile.error.exception.NotFoundException;
+import ru.egartech.profile.error.exception.PersonNotFoundException;
 import ru.egartech.sdk.exception.customfield.CustomFieldNotFoundException;
 import ru.egartech.sdk.exception.customfield.CustomFieldValueNotFoundException;
 import ru.egartech.sdk.exception.dto.ApiErrorDto;
@@ -31,9 +31,9 @@ public class ControllerExceptionHandler extends AbstractRestExceptionHandler {
         return buildMessage(messageSource, exception, webRequest, "unknownerror", exception.getLocalizedMessage());
     }
 
-    @ExceptionHandler(NotFoundException.class)
+    @ExceptionHandler(PersonNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    protected ApiErrorDto handleNotFoundException(NotFoundException exception, WebRequest webRequest) {
+    protected ApiErrorDto handleNotFoundException(PersonNotFoundException exception, WebRequest webRequest) {
         exception.printStackTrace();
         return buildMessage(messageSource, exception, webRequest, "noegarid", exception.getId());
     }

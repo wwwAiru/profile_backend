@@ -5,6 +5,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import ru.egartech.profile.config.CustomFieldProperties;
 import ru.egartech.profile.error.exception.MultipleTasksByEgarIdException;
+import ru.egartech.profile.error.exception.PersonNotFoundException;
 import ru.egartech.profile.mapper.ResponseMapper;
 import ru.egartech.profile.model.Profile;
 import ru.egartech.profile.model.ResponseDropdownOption;
@@ -21,8 +22,6 @@ import ru.egartech.sdk.dto.task.deserialization.customfield.field.label.LabelsFi
 import ru.egartech.sdk.dto.task.serialization.customfield.request.CustomFieldRequest;
 
 import java.util.List;
-import java.util.Locale;
-import java.util.function.Supplier;
 
 @Service
 @RequiredArgsConstructor
@@ -32,7 +31,6 @@ public class ProfileServiceImpl implements ProfileService {
     private final CustomFieldClient customFieldClient;
     private final ResponseMapper mapper;
     private final CustomFieldProperties properties;
-    private final MessageSource messageSource;
 
     @Override
     public Profile getProfileByEgarId(String egarId) {
@@ -42,15 +40,10 @@ public class ProfileServiceImpl implements ProfileService {
                         .fieldId(properties.egarId)
                         .value(egarId)
                         .build());
-
-        if (tasks.size() > 1) throw new MultipleTasksByEgarIdException(egarId);
-
-        Supplier<NullPointerException> exceptionSupplier =
-                () -> new NullPointerException(messageSource.getMessage(
-                        "notasksinquery",
-                        null,
-                        Locale.getDefault()));
-        TaskDto exactTask = tasks.stream().findFirst().orElseThrow(exceptionSupplier).getFirstTask();
+        if (tasks.size() > 1) {
+            throw new MultipleTasksByEgarIdException(egarId);
+        }
+        TaskDto exactTask = tasks.stream().findFirst().orElseThrow(() -> new PersonNotFoundException(egarId)).getFirstTask();
         return mapper.toProfile(exactTask);
     }
 
