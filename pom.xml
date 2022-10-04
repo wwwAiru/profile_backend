@@ -22,6 +22,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.springframework.retry</groupId>
+            <artifactId>spring-retry</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>ru.egartech</groupId>
             <artifactId>click-up-sdk-spring-boot-starter</artifactId>
             <version>0.0.1-SNAPSHOT</version>
