@@ -44,6 +44,8 @@ class ResponseMapperTest {
         TasksDto response = mapper.readValue(ResourceUtils.getFile(ResourceUtils.CLASSPATH_URL_PREFIX.concat("clickup_response_tasks.json")), TasksDto.class);
         TaskDto task = response.getFirstTask();
         Profile profile = responseMapper.toProfile(task);
+        assertThat(profile).hasNoNullFieldsOrProperties();
+        profile.setEgarExperience(Experience.builder().build());
         assertThat(profile).isEqualTo(Profile
                 .builder()
                 .avatarUrl("https://t4597045.p.clickup-attachments.com/t4597045/c9372130-1753-4f77-b79d-f7b8c0a3b18a/%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_2022-09-13_165406813.png")
@@ -51,7 +53,7 @@ class ResponseMapperTest {
                 .onboardDate("1618016400000")
                 .position(ResponseDropdownOption.builder().fieldId("33064c03-b21f-4f93-b74d-b2ef4b081208").name("Разработчик").index(0).build())
                 .location(ResponseDropdownOption.builder().fieldId("bf015492-98e8-42f9-91a4-c802c988283a").name("Калининград").index(21).build())
-                .egarExperience(Experience.builder().years(1).months(5).build())
+                .egarExperience(Experience.builder().build())
                 .egarId("username")
                 .employments(List.of("2z4kcma", "2z4g3d7"))
                 .listId(180311895)
@@ -68,7 +70,6 @@ class ResponseMapperTest {
                 .employments(List.of("2z4kcma", "2z4g3d7"))
                 .build()
         );
-        assertThat(profile).hasNoNullFieldsOrProperties();
     }
 
     @Test
