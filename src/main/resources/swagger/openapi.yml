@@ -6,6 +6,37 @@ info:
   version: "1.0.0"
 
 paths:
+  /profile/id/{egarId}/update/field/{fieldId}:
+    post:
+      tags:
+        - Profile
+
+      description: "TODO"
+
+      operationId: updateCustomField
+
+      parameters:
+        - name: egarId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: "Egar ID сотрудника"
+
+        - name: fieldId
+          in: path
+          required: true
+          description: "Field ID для поиска"
+          schema:
+            type: string
+
+      responses:
+        200:
+          description: "TODO"
+          content:
+            application/json:
+              schema:
+                {}
 
   /profile/labels/list/{listId}/field/{fieldId}:
     get:
