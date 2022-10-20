@@ -6,14 +6,14 @@ info:
   version: "1.0.0"
 
 paths:
-  /profile/id/{egarId}/update/field/{fieldId}:
-    post:
+  /profile/id/{egarId}/list/{listId}/update/field/{fieldId}:
+    delete:
       tags:
         - Profile
 
       description: "TODO"
 
-      operationId: updateCustomField
+      operationId: deleteCustomField
 
       parameters:
         - name: egarId
@@ -30,13 +30,62 @@ paths:
           schema:
             type: string
 
+        - name: listId
+          in: path
+          required: true
+          description: "List ID для поиска"
+          schema:
+            type: integer
+
+      responses:
+        200:
+          description: "TODO"
+#          content:
+#            application/json:
+#              schema: {}
+    post:
+      tags:
+        - Profile
+
+      description: "TODO"
+
+      operationId: updateCustomField
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateField"
+
+      parameters:
+        - name: egarId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: "Egar ID сотрудника"
+
+        - name: fieldId
+          in: path
+          required: true
+          description: "Field ID для поиска"
+          schema:
+            type: string
+
+        - name: listId
+          in: path
+          required: true
+          description: "List ID для поиска"
+          schema:
+            type: integer
+
       responses:
         200:
           description: "TODO"
           content:
             application/json:
-              schema:
-                {}
+              schema: {}
 
   /profile/labels/list/{listId}/field/{fieldId}:
     get:
@@ -136,6 +185,13 @@ paths:
 
 components:
   schemas:
+    UpdateField:
+      type: object
+      properties:
+        value:
+          type: object
+          example: "Николаевич"
+
     PositionExample:
       type: object
       properties:
