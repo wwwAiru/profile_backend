@@ -31,23 +31,23 @@ public class ResponseMapper {
     private final CustomFieldProperties properties;
 
     public Profile toProfile(TaskDto task) {
-        TextFieldDto egarId = task.customField(properties.egarId);
-        AttachmentFieldDto avatarField = task.customField(properties.avatar);
-        TextFieldDto onBoardField = task.customField(properties.onboard_date);
-        TextFieldDto birthDate = task.customField(properties.birth_date);
-        DropdownFieldDto gradeField = task.customField(properties.grade);
-        TextFieldDto whatsappField = task.customField(properties.whatsapp);
-        TextFieldDto phoneField = task.customField(properties.phone);
-        TextFieldDto workEmailField = task.customField(properties.workEmail);
-        TextFieldDto telegramField = task.customField(properties.telegram);
-        TextFieldDto skypeField = task.customField(properties.skype);
-        DropdownFieldDto positionField = task.customField(properties.position);
-        DropdownFieldDto locationField = task.customField(properties.location);
-        LabelsFieldDto stackField = task.customField(properties.stack);
-        RelationshipFieldDto sickdayField = task.customField(properties.sickdayRelationship);
-        RelationshipFieldDto vacationsField = task.customField(properties.vacationRelationship);
-        RelationshipFieldDto employmentsField = task.customField(properties.employmentsRelationship);
-        RelationshipFieldDto suppliesField = task.customField(properties.suppliesRelationship);
+        TextFieldDto egarId = task.customField(properties.getEgarId());
+        AttachmentFieldDto avatarField = task.customField(properties.getAvatar());
+        TextFieldDto onBoardField = task.customField(properties.getOnboardDate());
+        TextFieldDto birthDate = task.customField(properties.getBirthDate());
+        DropdownFieldDto gradeField = task.customField(properties.getGrade());
+        TextFieldDto whatsappField = task.customField(properties.getWhatsapp());
+        TextFieldDto phoneField = task.customField(properties.getPhone());
+        TextFieldDto workEmailField = task.customField(properties.getWorkEmail());
+        TextFieldDto telegramField = task.customField(properties.getTelegram());
+        TextFieldDto skypeField = task.customField(properties.getSkype());
+        DropdownFieldDto positionField = task.customField(properties.getPosition());
+        DropdownFieldDto locationField = task.customField(properties.getLocation());
+        LabelsFieldDto stackField = task.customField(properties.getStack());
+        RelationshipFieldDto sickdayField = task.customField(properties.getSickdayRelationship());
+        RelationshipFieldDto vacationsField = task.customField(properties.getVacationRelationship());
+        RelationshipFieldDto employmentsField = task.customField(properties.getEmploymentsRelationship());
+        RelationshipFieldDto suppliesField = task.customField(properties.getSuppliesRelationship());
 
         Profile profile = new Profile();
         profile.setListId(task.getList().getId());

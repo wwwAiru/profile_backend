@@ -21,6 +21,8 @@ import ru.egartech.sdk.dto.task.deserialization.customfield.field.dropdown.Dropd
 import ru.egartech.sdk.dto.task.deserialization.customfield.field.label.LabelTypeConfig;
 import ru.egartech.sdk.dto.task.deserialization.customfield.field.label.LabelsFieldDto;
 import ru.egartech.sdk.dto.task.serialization.customfield.request.CustomFieldRequest;
+import ru.egartech.security.aspect.token.Token;
+import ru.egartech.security.aspect.token.TokenSecurity;
 
 import java.util.List;
 
@@ -38,7 +40,7 @@ public class ProfileServiceImpl implements ProfileService {
         List<TasksDto> tasks = client.getTasksByCustomFields(false,
                 CustomFieldRequest
                         .builder()
-                        .fieldId(properties.egarId)
+                        .fieldId(properties.getEgarId())
                         .value(egarId)
                         .build());
         if (tasks.size() > 1) {
@@ -49,12 +51,13 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public Object updateCustomField(String egarId, String fieldId, Integer listId, UpdateField body) {
+    @TokenSecurity
+    public Object updateCustomField(@Token("preferred_username") String egarId, String fieldId, Integer listId, UpdateField body) {
         TasksDto tasks = client.getTasksByCustomFields(listId,
                 false,
                 CustomFieldRequest
                         .builder()
-                        .fieldId(properties.egarId)
+                        .fieldId(properties.getEgarId())
                         .value(egarId)
                         .build());
         TaskDto task = tasks.getFirstTask();
@@ -62,12 +65,13 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public Void deleteCustomField(String egarId, String fieldId, Integer listId) {
+    @TokenSecurity
+    public Void deleteCustomField(@Token("preferred_username") String egarId, String fieldId, Integer listId) {
         TasksDto tasks = client.getTasksByCustomFields(listId,
                 false,
                 CustomFieldRequest
                         .builder()
-                        .fieldId(properties.egarId)
+                        .fieldId(properties.getEgarId())
                         .value(egarId)
                         .build());
         TaskDto task = tasks.getFirstTask();
