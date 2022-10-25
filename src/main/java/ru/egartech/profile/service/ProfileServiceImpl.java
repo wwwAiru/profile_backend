@@ -61,7 +61,7 @@ public class ProfileServiceImpl implements ProfileService {
                         .value(egarId)
                         .build());
         TaskDto task = tasks.getFirstTask();
-        return customFieldClient.setCustomFieldValue(task.getId(), fieldId, UpdateFieldDto.of(body.getValue()));
+        return customFieldClient.updateCustomFieldValue(task.getId(), fieldId, UpdateFieldDto.of(body.getValue()));
     }
 
     @Override
