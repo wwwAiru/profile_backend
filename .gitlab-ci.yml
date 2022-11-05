@@ -27,7 +27,7 @@ package:
 push:
   stage: push
   variables:
-    $IMAGE_NAME: "$CI_REGISTRY/portal/$CI_PROJECT_NAME"
+    IMAGE_NAME: $CI_REGISTRY/portal/$CI_PROJECT_NAME
   only:
     - develop
   script:
