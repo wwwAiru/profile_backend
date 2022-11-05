@@ -17,7 +17,6 @@ package:
   only:
     - develop
   script:
-    - echo $CI_DEPLOY_USER/$CI_DEPLOY_PASSWORD
     - mvn clean package
   artifacts:
     paths:
