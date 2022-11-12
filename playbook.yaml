@@ -1,4 +1,5 @@
 - hosts: 192.168.111.10
-- name: Recursively find /tmp files older than 2 days
-  ansible.builtin.find:
-      paths: /home/cuerp
+  tasks:
+    - name: Recursively find /tmp files older than 2 days
+      find:
+        paths: /home/cuerp
