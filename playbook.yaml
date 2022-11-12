@@ -1,4 +1,4 @@
-- hosts: 192.168.111.10
+- hosts: develop host
   tasks:
     - name: Recursively find /tmp files older than 2 days
       find:
