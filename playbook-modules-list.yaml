@@ -1,0 +1,8 @@
+- hosts: 176.113.82.235
+  tasks:
+    - name: list ansible modules
+      command: ansible-doc -l
+      register: out
+    
+    - debug:
+        var: out
