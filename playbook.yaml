@@ -8,6 +8,6 @@
         recreate: yes
         pull: yes
         networks:
-          name: cuerp_default
-          links: 
-            - profile
+          - name: cuerp_default
+            links: 
+              - profile
