@@ -31,7 +31,7 @@ push:
   only:
     - develop
   script:
-    - docker build -t $IMAGE_NAME:latest -t $IMAGE_NAME:version .
+    - docker build -t $IMAGE_NAME:latest .
     - docker login -u $CI_DEPLOY_USER -p $CI_DEPLOY_PASSWORD $CI_REGISTRY
     - docker push $IMAGE_NAME:latest
     - docker image rm $IMAGE_NAME:latest
