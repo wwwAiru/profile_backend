@@ -1,10 +1,13 @@
 - hosts: 176.113.82.235
   tasks:
-    - name: Recursively find /tmp files older than 2 days
-      find:
-        paths: /home/cuerp
-        file_type: any
-      register: out
-        
-    - debug:
-        var: out
+    - name: Stop container, pull latest image and run container with new version of image
+      docker_container:
+        name: profile
+        image: gitlab.innoconsulting.ru:5050/portal/profile_backend
+        state: started
+        recreate: yes
+        pull: yes
+        networks:
+          name: cuerp_default
+          links: 
+            - profile
