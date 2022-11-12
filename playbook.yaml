@@ -6,4 +6,4 @@
         file_type: any
         register: out
     - debug:
-      var: out
+        var: out
