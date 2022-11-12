@@ -2,7 +2,7 @@
   tasks:
     - name: Stop container, pull latest image and run container with new version of image
       docker_container:
-        name: profile
+        name: cuerp-profile-1
         image: gitlab.innoconsulting.ru:5050/portal/profile_backend
         state: started
         recreate: yes
