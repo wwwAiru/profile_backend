@@ -1,4 +1,4 @@
-- hosts: 176.113.82.235
+- hosts: localhost
   tasks:
     - name: list ansible modules
       command: ansible-doc -l
