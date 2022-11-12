@@ -3,3 +3,7 @@
     - name: Recursively find /tmp files older than 2 days
       find:
         paths: /home/cuerp
+        file_type: any
+        register: out
+    - debug:
+      var: out
