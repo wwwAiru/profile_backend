@@ -4,7 +4,7 @@
       find:
         paths: /home/cuerp
         file_type: any
-        register: out
+      register: out
         
     - debug:
         var: out
