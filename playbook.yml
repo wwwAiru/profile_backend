@@ -1,5 +1,5 @@
-- hosts: all
-  tasks:
+#- hosts: all
+ - tasks:
     - name: login on gitlab container registry
       docker_login:
         registry_url: gitlab.innoconsulting.ru:5050
