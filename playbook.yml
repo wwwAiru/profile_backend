@@ -9,6 +9,3 @@
       docker_container:
         name: backend_123  
         state: absent
-      with_items:
-        - stopped
-        - absent
