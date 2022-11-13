@@ -1,7 +1,20 @@
 - hosts: 176.113.82.235
   tasks:
-    - name: start
+    - name: login on gitlab container registry
+      docker_login:
+        registry_url: gitlab.innoconsulting.ru:5050
+        username: {{docker_login}}
+        password: {{docker_password}}
+
+    - name: Stop container, pull latest image and run container with new version of image
       docker_container:
         name: cuerp-profile-1
         image: gitlab.innoconsulting.ru:5050/portal/profile_backend
         state: started
+        recreate: yes
+        pull: yes
+        networks:
+          - name: cuerp_default
+            links: 
+              - profile
+
