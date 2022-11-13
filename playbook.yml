@@ -6,6 +6,6 @@
     #     image: gitlab.innoconsulting.ru:5050/portal/profile_backend
     #     state: started
     - name: Stop and remove old container
-      docker_container:
+      community.docker.docker_container:
         name: backend_123  
         state: absent
