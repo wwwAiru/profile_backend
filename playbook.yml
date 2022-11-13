@@ -1,6 +1,6 @@
 - hosts: 176.113.82.235
   tasks:
-    - name: name
+    - name: start
       docker_container:
         name: cuerp-profile-1
         image: gitlab.innoconsulting.ru:5050/portal/profile_backend
