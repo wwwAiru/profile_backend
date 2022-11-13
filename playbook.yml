@@ -1,11 +1,9 @@
 - hosts: 176.113.82.235
+  collections:
+    - community.docker
   tasks:
-    # - name: start
-    #   community.docker.docker_container:
-    #     name: cuerp-profile-1
-    #     image: gitlab.innoconsulting.ru:5050/portal/profile_backend
-    #     state: started
-    - name: Stop and remove old container
+    - name: start
       community.docker.docker_container:
-        name: backend_123  
-        state: absent
+        name: cuerp-profile-1
+        image: gitlab.innoconsulting.ru:5050/portal/profile_backend
+        state: started
