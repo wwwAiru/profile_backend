@@ -50,5 +50,3 @@ deploy:
       --conf.insecure 
       -f human job_templates launch 'rollout container application template' 
       --monitor --filter status
-  tags: 
-    - shell
