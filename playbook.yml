@@ -1,6 +1,4 @@
 - hosts: 176.113.82.235
-  collections:
-    - community.docker
   tasks:
     - name: start
       docker_container:
