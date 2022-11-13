@@ -7,9 +7,8 @@
     #     state: started
     - name: Stop and remove old container
       docker_container:
-        name: backend   
-        state: '{{ item }}'
+        name: backend_123  
+        state: absent
       with_items:
         - stopped
         - absent
-      ignore_errors: yes
