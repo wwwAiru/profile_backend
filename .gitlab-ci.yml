@@ -50,6 +50,6 @@ deploy:
 #      --conf.insecure 
 #      -f human job_templates launch 'rollout container application template' 
 #      --monitor --filter status
-    - curl -u $AWX_USERNAME:$AWX_PASSWORD $AWX_HOST/api/v2/job_templates/9/launch/
+    - curl --insecure -u $AWX_USERNAME:$AWX_PASSWORD $AWX_HOST/api/v2/job_templates/9/launch/
   tags:
     - shell
