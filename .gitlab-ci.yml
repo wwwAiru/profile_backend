@@ -41,7 +41,7 @@ push:
 
 deploy:
   stage: deploy
-  image: gitlab.innoconsulting.ru:5050/portal/awx-cli:latest
+ # image: gitlab.innoconsulting.ru:5050/portal/awx-cli:latest
   script:
 #    - awx 
 #      --conf.host $AWX_HOST 
@@ -52,4 +52,4 @@ deploy:
 #      --monitor --filter status
     - curl -u $AWX_USERNAME:$AWX_PASSWORD $AWX_HOST/api/v2/job_templates/9/launch/
   tags:
-    - docker
+    - shell
