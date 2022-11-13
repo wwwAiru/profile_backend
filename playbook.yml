@@ -3,8 +3,8 @@
     - name: login on gitlab container registry
       docker_login:
         registry_url: gitlab.innoconsulting.ru:5050
-        username: {{docker_login}}
-        password: {{docker_password}}
+        username: "{{docker_login}}"
+        password: "{{docker_password}}"
 
     - name: Stop container, pull latest image and run container with new version of image
       docker_container:
