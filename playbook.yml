@@ -15,6 +15,7 @@
         pull: yes
         networks:
           - name: cuerp_default
-            links: 
+            aliases: 
+              - cuerp-profile-1
               - profile
 
