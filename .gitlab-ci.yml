@@ -45,7 +45,9 @@ deploy:
   script:
     - awx 
       --conf.host $AWX_HOST 
-      --conf.token $AWX_TOKEN 
+      --conf.username $AWX_USERNAME 
+      --conf.password $AWX_PASSWORD 
+      --conf.insecure 
       -f human job_templates launch 'rollout container application template' 
       --monitor --filter status
   tags: 
