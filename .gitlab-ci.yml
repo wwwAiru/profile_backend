@@ -2,6 +2,7 @@ stages:
   - test
   - package
   - push
+  - deploy
 
 test:
   stage: test
@@ -36,4 +37,16 @@ push:
     - docker push $IMAGE_NAME:latest
     - docker image rm $IMAGE_NAME:latest
   tags:
+    - shell
+
+deploy:
+  stage: deploy
+  image: gitlab.innoconsulting.ru:5050/portal/awx-cli
+  script:
+    - awx 
+      --conf.host $AWX_HOST 
+      --conf.token $AWX_TOKEN 
+      -f human job_templates launch 'rollout container application template' 
+      --monitor --filter status
+  tags: 
     - shell
