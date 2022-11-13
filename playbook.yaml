@@ -5,9 +5,3 @@
         name: cuerp-profile-1
         image: gitlab.innoconsulting.ru:5050/portal/profile_backend
         state: started
-        recreate: yes
-        pull: yes
-        networks:
-          - name: cuerp_default
-            links: 
-              - profile
